@@ -1,0 +1,313 @@
+﻿@model BeerMatchBoxService.Models.UserTaste
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>UserTaste</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UserId" />
+            <div class="form-group">
+                <label asp-for="LikesBitter" class="control-label"></label>
+                <select asp-for="LikesBitter">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesBitter" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesSour" class="control-label"></label>
+                <select asp-for="LikesSour">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesSour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesHoppy" class="control-label"></label>
+                <select asp-for="LikesHoppy">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesHoppy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesMalty" class="control-label"></label>
+                <select asp-for="LikesMalty">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesMalty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesSweet" class="control-label"></label>
+                <select asp-for="LikesSweet">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesSweet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesStrong" class="control-label"></label>
+                <select asp-for="LikesStrong">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesStrong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesSession" class="control-label"></label>
+                <select asp-for="LikesSession">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesSession" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesOrganic" class="control-label"></label>
+                <select asp-for="LikesOrganic">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesOrganic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesPaleAle" class="control-label"></label>
+                <select asp-for="LikesPaleAle">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesPaleAle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesIPA" class="control-label"></label>
+                <select asp-for="LikesIPA">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesIPA" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesWestCoastIPA" class="control-label"></label>
+                <select asp-for="LikesWestCoastIPA">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesWestCoastIPA" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesNewEnglandIPA" class="control-label"></label>
+                <select asp-for="LikesNewEnglandIPA">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesNewEnglandIPA" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesStout" class="control-label"></label>
+                <select asp-for="LikesStout">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesStout" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesPorter" class="control-label"></label>
+                <select asp-for="LikesPorter">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesPorter" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesBrownAle" class="control-label"></label>
+                <select asp-for="LikesBrownAle">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesBrownAle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesAmber" class="control-label"></label>
+                <select asp-for="LikesAmber">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesAmber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesRedAle" class="control-label"></label>
+                <select asp-for="LikesRedAle">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesRedAle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesWheat" class="control-label"></label>
+                <select asp-for="LikesWheat">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesWheat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesHefeweizen" class="control-label"></label>
+                <select asp-for="LikesHefeweizen">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesHefeweizen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesBelgianWit" class="control-label"></label>
+                <select asp-for="LikesBelgianWit">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesBelgianWit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesSourBeer" class="control-label"></label>
+                <select asp-for="LikesSourBeer">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesSourBeer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesWildSour" class="control-label"></label>
+                <select asp-for="LikesWildSour">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesWildSour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesBerlinerWeisseSour" class="control-label"></label>
+                <select asp-for="LikesBerlinerWeisseSour">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesBerlinerWeisseSour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesGoseSour" class="control-label"></label>
+                <select asp-for="LikesGoseSour">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesGoseSour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesSaison" class="control-label"></label>
+                <select asp-for="LikesSaison">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesSaison" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LikesBelgianDoubleTrippel" class="control-label"></label>
+                <select asp-for="LikesBelgianDoubleTrippel">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LikesBelgianDoubleTrippel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

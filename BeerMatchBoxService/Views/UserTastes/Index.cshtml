@@ -1,0 +1,191 @@
+﻿@model IEnumerable<BeerMatchBoxService.Models.UserTaste>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesBitter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesSour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesHoppy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesMalty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesSweet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesStrong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesSession)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesOrganic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesPaleAle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesIPA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesWestCoastIPA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesNewEnglandIPA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesStout)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesPorter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesBrownAle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesAmber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesRedAle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesWheat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesHefeweizen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesBelgianWit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesSourBeer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesWildSour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesBerlinerWeisseSour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesGoseSour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesSaison)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesBelgianDoubleTrippel)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesBitter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesSour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesHoppy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesMalty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesSweet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesStrong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesSession)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesOrganic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesPaleAle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesIPA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesWestCoastIPA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesNewEnglandIPA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesStout)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesPorter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesBrownAle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesAmber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesRedAle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesWheat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesHefeweizen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesBelgianWit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesSourBeer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesWildSour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesBerlinerWeisseSour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesGoseSour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesSaison)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesBelgianDoubleTrippel)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -24,6 +24,14 @@ namespace BeerMatchBoxService.Controllers
             _context = context;
         }
 
+        //HOME Action
+        public IActionResult Home()
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User loggedInUser = _context.User.Where(u => u.IdentityUserId == userId).SingleOrDefault();
+            return View(loggedInUser);
+        }
+
         // GET: Users
         public async Task<IActionResult> Index()
         {
@@ -70,10 +78,10 @@ namespace BeerMatchBoxService.Controllers
                 _context.Add(user);
                 await Geocode(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "UserTastes");
             }
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", user.IdentityUserId);
-            return RedirectToAction("Create", "UserTaste");
+            return View();
         }
 
         static async Task Geocode(User user)

@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BeerMatchBoxService.Data.Migrations
+namespace BeerMatchBoxService.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -153,6 +153,77 @@ namespace BeerMatchBoxService.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    Zipcode = table.Column<string>(nullable: true),
+                    Latitude = table.Column<double>(nullable: false),
+                    Longitude = table.Column<double>(nullable: false),
+                    IdentityUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_User_AspNetUsers_IdentityUserId",
+                        column: x => x.IdentityUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserTaste",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(nullable: false),
+                    LikesBitter = table.Column<int>(nullable: false),
+                    LikesSour = table.Column<int>(nullable: false),
+                    LikesHoppy = table.Column<int>(nullable: false),
+                    LikesMalty = table.Column<int>(nullable: false),
+                    LikesSweet = table.Column<int>(nullable: false),
+                    LikesStrong = table.Column<int>(nullable: false),
+                    LikesSession = table.Column<int>(nullable: false),
+                    LikesOrganic = table.Column<int>(nullable: false),
+                    LikesPaleAle = table.Column<int>(nullable: false),
+                    LikesIPA = table.Column<int>(nullable: false),
+                    LikesWestCoastIPA = table.Column<int>(nullable: false),
+                    LikesNewEnglandIPA = table.Column<int>(nullable: false),
+                    LikesStout = table.Column<int>(nullable: false),
+                    LikesPorter = table.Column<int>(nullable: false),
+                    LikesBrownAle = table.Column<int>(nullable: false),
+                    LikesAmber = table.Column<int>(nullable: false),
+                    LikesRedAle = table.Column<int>(nullable: false),
+                    LikesWheat = table.Column<int>(nullable: false),
+                    LikesHefeweizen = table.Column<int>(nullable: false),
+                    LikesBelgianWit = table.Column<int>(nullable: false),
+                    LikesSourBeer = table.Column<int>(nullable: false),
+                    LikesWildSour = table.Column<int>(nullable: false),
+                    LikesBerlinerWeisseSour = table.Column<int>(nullable: false),
+                    LikesGoseSour = table.Column<int>(nullable: false),
+                    LikesSaison = table.Column<int>(nullable: false),
+                    LikesBelgianDoubleTrippel = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserTaste", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserTaste_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +262,16 @@ namespace BeerMatchBoxService.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_IdentityUserId",
+                table: "User",
+                column: "IdentityUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserTaste_UserId",
+                table: "UserTaste",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,7 +292,13 @@ namespace BeerMatchBoxService.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "UserTaste");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
