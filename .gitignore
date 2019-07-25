@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 
 APIKeys.cs
+
+appsettings.json
