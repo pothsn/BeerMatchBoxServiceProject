@@ -23,6 +23,10 @@ namespace BeerMatchBoxService.Models
 
         public string Zipcode { get; set; }
 
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }  
+
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }

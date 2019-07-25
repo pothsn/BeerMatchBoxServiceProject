@@ -16,7 +16,7 @@ namespace BeerMatchBoxService.Models
         public int UserId { get; set; }
         public User User { get; set; }
 
-        //Fake-ish foreign key to BreweryDB API
+        [ForeignKey("BreweryDBBeer")]
         public string BreweryDBBeerId { get; set; }
         public BreweryDBBeer BreweryDBBeer { get; set; }
     }

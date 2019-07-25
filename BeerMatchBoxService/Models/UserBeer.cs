@@ -18,12 +18,12 @@ namespace BeerMatchBoxService.Models
         public int UserId { get; set; }
         public User User { get; set; }
 
-        //Fake-ish foreign key to BreweryDB API
+        [ForeignKey("BreweryDBBeer")]
         public string BreweryDBBeerId { get; set; }
         public BreweryDBBeer BreweryDBBeer { get; set; }
 
-        //Fake-ish foreign key to BreweryDB API
-        public string BreweryDBBreweryId { get; set; }
-        public BreweryDBBrewery BreweryDBBrewery { get; set; }
+        //[ForeignKey("BrweryDBBrewery")]
+        //public string BreweryDBBreweryId { get; set; }
+        //public BreweryDBBrewery BreweryDBBrewery { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using BeerMatchBoxService.Models;
 
 namespace BeerMatchBoxService.Data
 {
@@ -12,5 +13,6 @@ namespace BeerMatchBoxService.Data
             : base(options)
         {
         }
+        public DbSet<BeerMatchBoxService.Models.User> User { get; set; }
     }
 }
