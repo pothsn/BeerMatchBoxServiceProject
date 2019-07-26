@@ -34,7 +34,7 @@ namespace BeerMatchBoxService.Controllers
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var thisResult = JsonConvert.DeserializeObject<JObject>(responseBody);
-                //foreach (var data in thisResult["data"])
+                
                 var beers = thisResult["data"].ToList();
 
                 List<BreweryDBBeer> breweryDBBeers = new List<BreweryDBBeer>();
