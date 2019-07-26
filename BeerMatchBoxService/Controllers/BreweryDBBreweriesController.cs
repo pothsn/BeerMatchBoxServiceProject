@@ -40,7 +40,7 @@ namespace BeerMatchBoxService.Controllers
                 {
                     BreweryDBBrewery brewery = new BreweryDBBrewery();
                     var id = breweries[i]["id"];
-                    brewery.Id = id.ToObject<string>();
+                    brewery.BreweryDBBreweryId = id.ToObject<string>();
                     var name = breweries[i]["name"];
                     brewery.Name = name.ToObject<string>();
 

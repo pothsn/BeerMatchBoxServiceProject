@@ -82,19 +82,69 @@ namespace BeerMatchBoxService.Controllers
                     string thisBreweryResponseBody = await thisResponse.Content.ReadAsStringAsync();
                     var thisBreweryResult = JsonConvert.DeserializeObject<JObject>(thisBreweryResponseBody);
                    
-                    //BreweryDBBrewery breweryDBBrewery = new BreweryDBBrewery();
-                    //var breweryId = thisBreweryResult["data"][0]["id"];
-                    //breweryDBBrewery.BreweryDBBreweryId = breweryId.ToObject<string>();
                     var brewereyName = thisBreweryResult["data"][0]["name"];
-                    //breweryDBBrewery.Name = brewreyName.ToObject<string>();
+                    
                     breweryDBBeer.BreweryName = brewereyName.ToObject<string>();
 
                     breweryDBBeers.Add(breweryDBBeer);                    
                 }
+                return View(breweryDBBeers);              
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+            }
+            return View();
+        }
 
-                //IEnumerable<BreweryDBBeer> IEnumberableBreweryDBBeers = breweryDBBeers;
+        public async Task<IActionResult> GetBreweryBeers(string breweryDBBreweryId)
+        {
+            var breweryBeersUrl = (APIKeys.BreweryDBAPIURL + "brewery/" + breweryDBBreweryId + "/beers/?key=" + APIKeys.BreweryDBAPIKey);
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(breweryBeersUrl);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<JObject>(responseBody);
+                var beers = result["data"].ToList();
+
+                List<BreweryDBBeer> breweryDBBeers = new List<BreweryDBBeer>();
+
+                for (var i = 0; i < beers.Count; i++)
+                {
+                    BreweryDBBeer breweryDBBeer = new BreweryDBBeer();
+                    var id = beers[i]["id"];
+                    breweryDBBeer.BreweryDBBeerId = id.ToObject<string>();
+                    var name = beers[i]["name"];
+                    breweryDBBeer.Name = name.ToObject<string>();
+                    if (beers[i]["style"] != null)
+                    {
+                        var style = beers[i]["style"]["name"];
+                        if (style != null)
+                        {
+                            breweryDBBeer.StyleName = style.ToObject<string>();
+                        }
+                    }
+                    var abv = beers[i]["abv"];
+                    if (abv != null)
+                    {
+                        breweryDBBeer.Abv = abv.ToObject<double>();
+                    }
+
+                    string findBeerBreweryURL = (APIKeys.BreweryDBAPIURL + "beer/" + breweryDBBeer.BreweryDBBeerId + "/breweries/?key=" + APIKeys.BreweryDBAPIKey);
+                    HttpResponseMessage thisResponse = await client.GetAsync(findBeerBreweryURL);
+                    thisResponse.EnsureSuccessStatusCode();
+                    string thisBreweryResponseBody = await thisResponse.Content.ReadAsStringAsync();
+                    var thisBreweryResult = JsonConvert.DeserializeObject<JObject>(thisBreweryResponseBody);
+
+                    var brewereyName = thisBreweryResult["data"][0]["name"];
+
+                    breweryDBBeer.BreweryName = brewereyName.ToObject<string>();
+
+                    breweryDBBeers.Add(breweryDBBeer);
+                }
                 return View(breweryDBBeers);
-                
             }
             catch (HttpRequestException e)
             {

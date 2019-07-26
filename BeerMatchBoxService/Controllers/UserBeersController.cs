@@ -74,20 +74,20 @@ namespace BeerMatchBoxService.Controllers
                 var ibu = beer["data"]["ibu"];
                 userBeer.Ibu = ibu.ToObject<double>();
             }
-            if (beer["style"] != null)
+            if (beer["data"]["style"] != null)
             {
-                var styleId = beer["style"]["id"];
+                var styleId = beer["data"]["style"]["id"];
                 if (styleId != null)
                 {
                     userBeer.StyleId = styleId.ToObject<int>();
                 }
-                var style = beer["style"]["name"];
+                var style = beer["data"]["style"]["name"];
                 if (style != null)
                 {
                     userBeer.StyleName = style.ToObject<string>();
                 }
             }
-            var description = beer["description"];
+            var description = beer["data"]["description"];
             if (description != null)
             {
                 userBeer.Description = description.ToObject<string>();
@@ -99,7 +99,7 @@ namespace BeerMatchBoxService.Controllers
 
             _context.Add(userBeer);
             await _context.SaveChangesAsync();
-            return RedirectToAction("GetBeers", "BreweryDBBeers");
+            return RedirectToAction("Home", "Users");
         }
 
         // GET: UserBeers/Create
