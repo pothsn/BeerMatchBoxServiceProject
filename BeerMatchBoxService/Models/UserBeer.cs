@@ -14,6 +14,13 @@ namespace BeerMatchBoxService.Models
 
         public string Name { get; set; }
 
+        public string StyleName { get; set; }
+
+        public int StyleId { get; set; }
+
+        public double? Abv { get; set; }
+        public double? Ibu { get; set; }
+
         [ForeignKey("User")]
         public int UserId { get; set; }
         public User User { get; set; }

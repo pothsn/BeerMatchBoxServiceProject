@@ -12,6 +12,8 @@ namespace BeerMatchBoxService.Models
         [Key]
         public string Id { get; set; }
 
+        public string BreweryDBBreweryId { get; set; }
+
         public string Name { get; set; }
 
         public string NameShortDisplay { get; set; }

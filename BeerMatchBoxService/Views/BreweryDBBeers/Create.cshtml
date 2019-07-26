@@ -1,0 +1,59 @@
+﻿@model BeerMatchBoxService.Models.BreweryDBBeer
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>BreweryDBBeer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Abv" class="control-label"></label>
+                <input asp-for="Abv" class="form-control" />
+                <span asp-validation-for="Abv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GlasswareId" class="control-label"></label>
+                <input asp-for="GlasswareId" class="form-control" />
+                <span asp-validation-for="GlasswareId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StyleId" class="control-label"></label>
+                <input asp-for="StyleId" class="form-control" />
+                <span asp-validation-for="StyleId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsOrganic" class="control-label"></label>
+                <input asp-for="IsOrganic" class="form-control" />
+                <span asp-validation-for="IsOrganic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsRetired" class="control-label"></label>
+                <input asp-for="IsRetired" class="form-control" />
+                <span asp-validation-for="IsRetired" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BreweryDBBreweryId" class="control-label"></label>
+                <select asp-for="BreweryDBBreweryId" class ="form-control" asp-items="ViewBag.BreweryDBBreweryId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
