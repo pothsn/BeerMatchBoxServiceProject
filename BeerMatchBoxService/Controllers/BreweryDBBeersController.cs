@@ -89,7 +89,7 @@ namespace BeerMatchBoxService.Controllers
                     //breweryDBBrewery.Name = brewreyName.ToObject<string>();
                     breweryDBBeer.BreweryName = brewereyName.ToObject<string>();
 
-                    breweryDBBeers.Add(breweryDBBeer);
+                    breweryDBBeers.Add(breweryDBBeer);                    
                 }
 
                 //IEnumerable<BreweryDBBeer> IEnumberableBreweryDBBeers = breweryDBBeers;
@@ -107,7 +107,7 @@ namespace BeerMatchBoxService.Controllers
         // GET: BreweryDBBeers
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.BreweryDBBeer.Include(b => b.BreweryDBBrewery);
+            var applicationDbContext = _context.BreweryDBBeer;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -120,7 +120,7 @@ namespace BeerMatchBoxService.Controllers
             }
 
             var breweryDBBeer = await _context.BreweryDBBeer
-                .Include(b => b.BreweryDBBrewery)
+                
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (breweryDBBeer == null)
             {
@@ -150,7 +150,7 @@ namespace BeerMatchBoxService.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BreweryDBBreweryId"] = new SelectList(_context.BreweryDBBeer, "Id", "Id", breweryDBBeer.BreweryDBBreweryId);
+            ViewData["BreweryDBBreweryId"] = new SelectList(_context.BreweryDBBeer, "Id", "Id");
             return View(breweryDBBeer);
         }
 
@@ -167,7 +167,7 @@ namespace BeerMatchBoxService.Controllers
             {
                 return NotFound();
             }
-            ViewData["BreweryDBBreweryId"] = new SelectList(_context.BreweryDBBeer, "Id", "Id", breweryDBBeer.BreweryDBBreweryId);
+            ViewData["BreweryDBBreweryId"] = new SelectList(_context.BreweryDBBeer, "Id", "Id");
             return View(breweryDBBeer);
         }
 
@@ -203,7 +203,7 @@ namespace BeerMatchBoxService.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BreweryDBBreweryId"] = new SelectList(_context.BreweryDBBeer, "Id", "Id", breweryDBBeer.BreweryDBBreweryId);
+            ViewData["BreweryDBBreweryId"] = new SelectList(_context.BreweryDBBeer, "Id", "Id");
             return View(breweryDBBeer);
         }
 
@@ -216,7 +216,7 @@ namespace BeerMatchBoxService.Controllers
             }
 
             var breweryDBBeer = await _context.BreweryDBBeer
-                .Include(b => b.BreweryDBBrewery)
+                
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (breweryDBBeer == null)
             {

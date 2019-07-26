@@ -18,11 +18,11 @@ namespace BeerMatchBoxService.Models
 
         public string BreweryName { get; set; }
 
-        public double? Abv { get; set; }
+        public double Abv { get; set; }
 
         public double? Ibu { get; set; }
 
-        public int GlasswareId { get; set; }
+        public int? GlasswareId { get; set; }
 
         public int? StyleId { get; set; }
 
@@ -39,7 +39,5 @@ namespace BeerMatchBoxService.Models
         [ForeignKey("BreweryDBBrewery")]
         public string BreweryDBBreweryId { get; set; }
         public BreweryDBBeer BreweryDBBrewery { get; set; }
-
-        //public virtual IEnumerable<BreweryDBBeer> BreweryDBBeers { get; set; }
     }
 }

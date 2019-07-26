@@ -17,5 +17,6 @@ namespace BeerMatchBoxService.Data
         public DbSet<BeerMatchBoxService.Models.UserTaste> UserTaste { get; set; }
         public DbSet<BeerMatchBoxService.Models.BreweryDBBrewery> BreweryDBBrewery { get; set; }
         public DbSet<BeerMatchBoxService.Models.BreweryDBBeer> BreweryDBBeer { get; set; }
+        public DbSet<BeerMatchBoxService.Models.UserBeer> UserBeer { get; set; }
     }
 }

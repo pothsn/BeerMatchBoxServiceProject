@@ -41,7 +41,7 @@
                     @Html.DisplayFor(modelItem => item.BreweryName)
                 </td>
                 <td>
-                    <a asp-controller="UserBeers" asp-action="AddUserBeer" asp-route-id="@item.Id">Add to taste profile</a>
+                    <a asp-controller="UserBeers" asp-action="AddUserBeer" asp-route-brewerydbbeerid="@item.BreweryDBBeerId">Add to taste profile</a>
                 </td>
             </tr>
         }

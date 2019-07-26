@@ -32,7 +32,11 @@ namespace BeerMatchBoxService.Migrations
 
                     b.Property<string>("BreweryName");
 
-                    b.Property<int>("GlasswareId");
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("GlasswareId");
+
+                    b.Property<double?>("Ibu");
 
                     b.Property<string>("IsOrganic");
 
@@ -40,7 +44,9 @@ namespace BeerMatchBoxService.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("StyleId");
+                    b.Property<int?>("StyleId");
+
+                    b.Property<string>("StyleName");
 
                     b.HasKey("Id");
 
@@ -156,6 +162,41 @@ namespace BeerMatchBoxService.Migrations
                     b.HasIndex("IdentityUserId");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("BeerMatchBoxService.Models.UserBeer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double?>("Abv");
+
+                    b.Property<string>("BreweryDBBeerId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("GlasswareId");
+
+                    b.Property<double?>("Ibu");
+
+                    b.Property<string>("IsOrganic");
+
+                    b.Property<string>("IsRetired");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("StyleId");
+
+                    b.Property<string>("StyleName");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserBeer");
                 });
 
             modelBuilder.Entity("BeerMatchBoxService.Models.UserTaste", b =>
@@ -416,6 +457,14 @@ namespace BeerMatchBoxService.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
+                });
+
+            modelBuilder.Entity("BeerMatchBoxService.Models.UserBeer", b =>
+                {
+                    b.HasOne("BeerMatchBoxService.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BeerMatchBoxService.Models.UserTaste", b =>
