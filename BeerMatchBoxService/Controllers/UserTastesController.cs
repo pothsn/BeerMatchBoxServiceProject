@@ -62,8 +62,8 @@ namespace BeerMatchBoxService.Controllers
         {
             if (ModelState.IsValid)
             {
-                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                User loggedInUser = _context.User.Where(u => u.IdentityUserId == userId).SingleOrDefault();
+                string IdentityId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                User loggedInUser = _context.User.Where(u => u.IdentityUserId == IdentityId).SingleOrDefault();
                 userTaste.UserId = loggedInUser.Id;
                 _context.Add(userTaste);
                 await _context.SaveChangesAsync();               

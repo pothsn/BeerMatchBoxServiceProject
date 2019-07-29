@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeerMatchBoxService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190729192701_Initial")]
+    [Migration("20190729204748_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace BeerMatchBoxService.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<double>("Abv");
+                    b.Property<double?>("Abv");
 
                     b.Property<string>("BreweryDBBeerId");
 
@@ -272,77 +272,6 @@ namespace BeerMatchBoxService.Migrations
                     b.ToTable("UserTaste");
                 });
 
-            modelBuilder.Entity("BeerMatchBoxService.Models.UserTasteCopy", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LikesAle");
-
-                    b.Property<int>("LikesBarrelAged");
-
-                    b.Property<int>("LikesBelgian");
-
-                    b.Property<int>("LikesBitter");
-
-                    b.Property<int>("LikesBrownAle");
-
-                    b.Property<int>("LikesChocolate");
-
-                    b.Property<int>("LikesCoffee");
-
-                    b.Property<int>("LikesDark");
-
-                    b.Property<int>("LikesESB");
-
-                    b.Property<int>("LikesFruity");
-
-                    b.Property<int>("LikesGerman");
-
-                    b.Property<int>("LikesHoppy");
-
-                    b.Property<int>("LikesIPA");
-
-                    b.Property<int>("LikesLager");
-
-                    b.Property<int>("LikesMalty");
-
-                    b.Property<int>("LikesMiddling");
-
-                    b.Property<int>("LikesPale");
-
-                    b.Property<int>("LikesPaleAle");
-
-                    b.Property<int>("LikesPorter");
-
-                    b.Property<int>("LikesRedAle");
-
-                    b.Property<int>("LikesSaison");
-
-                    b.Property<int>("LikesSession");
-
-                    b.Property<int>("LikesSour");
-
-                    b.Property<int>("LikesSourBeer");
-
-                    b.Property<int>("LikesStout");
-
-                    b.Property<int>("LikesStrong");
-
-                    b.Property<int>("LikesSweet");
-
-                    b.Property<int>("LikesWheat");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserTasteCopy");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -545,14 +474,6 @@ namespace BeerMatchBoxService.Migrations
                 });
 
             modelBuilder.Entity("BeerMatchBoxService.Models.UserTaste", b =>
-                {
-                    b.HasOne("BeerMatchBoxService.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("BeerMatchBoxService.Models.UserTasteCopy", b =>
                 {
                     b.HasOne("BeerMatchBoxService.Models.User", "User")
                         .WithMany()

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BeerMatchBoxService.Models
 {
-    public class BreweryDBBeer
+    public class Match
     {
         [Key]
         public string Id { get; set; }
 
-        public string BreweryDBBeerId { get; set; }
+        public string MatchId { get; set; }
 
         public string Name { get; set; }
 
@@ -39,5 +39,17 @@ namespace BeerMatchBoxService.Models
         [ForeignKey("BreweryDBBrewery")]
         public string BreweryDBBreweryId { get; set; }
         public BreweryDBBeer BreweryDBBrewery { get; set; }
+
+        public decimal? BeerBreweryLatitude { get; set; }
+
+        public decimal? BeerBreweryLongitude { get; set; }
+
+        public string BeerBreweryAddress { get; set; }
+
+        public string BeerBreweryCity { get; set; }
+
+        public string BeerBreweryState { get; set; }
+
+        public int MatchRating { get; set; }
     }
 }
