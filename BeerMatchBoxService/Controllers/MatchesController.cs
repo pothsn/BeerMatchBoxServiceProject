@@ -261,29 +261,29 @@ namespace BeerMatchBoxService.Controllers
             string thisNewBreweryResponseBody = await thisNewResponse.Content.ReadAsStringAsync();
             var thisNewBreweryResult = JsonConvert.DeserializeObject<JObject>(thisNewBreweryResponseBody);
 
-            if (thisNewBreweryResult["data"][0]["latitude"] != null)
-            {
-                var breweryLat = thisNewBreweryResult["data"][0]["latitude"];
+            var breweryLat = thisNewBreweryResult["data"][0]["latitude"];
+            if (breweryLat != null)
+            {              
                 beer.BeerBreweryLatitude = breweryLat.ToObject<decimal>();
             }
-            if (thisNewBreweryResult["data"][0]["longitude"] != null)
+            var breweryLong = thisNewBreweryResult["data"][0]["longitude"];
+            if (breweryLong["data"][0]["longitude"] != null)
             {
-                var breweryLong = thisNewBreweryResult["data"][0]["longitude"];
                 beer.BeerBreweryLongitude = breweryLong.ToObject<decimal>();
             }
-            if (thisNewBreweryResult["data"][0]["streetAddress"] != null)
+            var breweryAddress = thisNewBreweryResult["data"][0]["streetAddress"];
+            if (breweryAddress != null)
             {
-                var breweryAddress = thisNewBreweryResult["data"][0]["streetAddress"];
                 beer.BeerBreweryAddress = breweryAddress.ToObject<string>();
             }
-            if (thisNewBreweryResult["data"][0]["locality"] != null)
-            {
-                var breweryCity = thisNewBreweryResult["data"][0]["locality"];
+            var breweryCity = thisNewBreweryResult["data"][0]["locality"];
+            if (breweryCity != null)
+            {                
                 beer.BeerBreweryCity = breweryCity.ToObject<string>();
             }
-            if (thisNewBreweryResult["data"][0]["region"] != null)
+            var breweryState = thisNewBreweryResult["data"][0]["region"];
+            if (breweryState != null)
             {
-                var breweryState = thisNewBreweryResult["data"][0]["region"];
                 beer.BeerBreweryState = breweryState.ToObject<string>();
             }
             return beer;
