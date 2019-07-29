@@ -32,15 +32,50 @@ namespace BeerMatchBoxService.Controllers
             //American - Style Pilsener xxxx --points from: LikesPale, LikesLager, (medium LikesHoppy, LikesBitter)
             if (CheckPilsener(loggedInUser))
             {
-                //pull pilseners from DB
                 var pilseners = await GetBeers("98");
+                foreach (Match pilsner in pilseners)
+                {
+                    beers.Add(pilsner);
+                }
+            }
+            if (CheckIPA(loggedInUser))
+            {
+                var IPAs = await GetBeers("30");
+                foreach (Match ipa in IPAs)
+                {
+                    beers.Add(ipa);
+                }
+            }
+            if (CheckSessionIPA(loggedInUser))
+            {
+                var sessionIPAs = await GetBeers("164");
+                foreach (Match sesssionIpa in sessionIPAs)
+                {
+                    beers.Add(sesssionIpa);
+                }
+            }
+            if (CheckPaleAle(loggedInUser))
+            {
+                var paleAles = await GetBeers("25");
+                foreach (Match paleAle in paleAles)
+                {
+                    beers.Add(paleAle);
+                }
             }
 
-            //American - Style India Pale Ale xxxx --points from: LikesPale, LikesHoppy, LikesBitter, LikesIPA
+            if (CheckESB(loggedInUser))
+            {
+                var esbs = await GetBeers("5");
+                foreach (Match esb in esbs)
+                {
+                    beers.Add(esb);
+                }
+            }
 
-            //Session India Pale Ale xx --points from: LikesSesson, LikesHoppy, LikesBitter, LikesIPA
 
-            //American - Style Pale Ale xxxxx-- points from: LikesPale, LikesHoppy, LikesBitter, LikesPaleAle
+
+
+
 
             //Extra Special Bitter xx-- points from: LikesBitter, LikesMalty, LikesMiddling, LikesAle
 
@@ -170,6 +205,58 @@ namespace BeerMatchBoxService.Controllers
             beer.BeerBreweryState = breweryState.ToObject<string>();
 
             return beer;
+        }
+
+        public bool CheckIPA(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesPale > 6 && userTaste.LikesHoppy > 6 && userTaste.LikesBitter > 6 && userTaste.LikesIPA > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckSessionIPA(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesSession > 6 && userTaste.LikesHoppy > 6 && userTaste.LikesBitter > 6 && userTaste.LikesIPA > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckPaleAle(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesPale > 6 && userTaste.LikesHoppy > 6 && userTaste.LikesBitter > 6 && userTaste.LikesPale > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckESB(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesBitter > 6 && userTaste.LikesMalty > 6 && userTaste.LikesMiddling > 6 && userTaste.LikesAle > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
