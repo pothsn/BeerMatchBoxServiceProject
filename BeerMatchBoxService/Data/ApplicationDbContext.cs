@@ -18,6 +18,5 @@ namespace BeerMatchBoxService.Data
         public DbSet<BeerMatchBoxService.Models.BreweryDBBrewery> BreweryDBBrewery { get; set; }
         public DbSet<BeerMatchBoxService.Models.BreweryDBBeer> BreweryDBBeer { get; set; }
         public DbSet<BeerMatchBoxService.Models.UserBeer> UserBeer { get; set; }
-        public DbSet<BeerMatchBoxService.Models.UserTasteCopy> UserTasteCopy { get; set; }
     }
 }

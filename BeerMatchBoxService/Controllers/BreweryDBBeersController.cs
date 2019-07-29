@@ -11,6 +11,7 @@ using BreweryDbStandard;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Security.Claims;
 
 namespace BeerMatchBoxService.Controllers
 {
@@ -153,6 +154,150 @@ namespace BeerMatchBoxService.Controllers
             }
             return View();
         }
+
+        public async Task<IActionResult> GetMatches ()
+        {
+            string IdentityId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User loggedInUser = _context.User.Where(u => u.IdentityUserId == IdentityId).SingleOrDefault();
+            List<BreweryDBBeer> beers = new List<BreweryDBBeer>();
+
+            //American - Style Pilsener xxxx --points from: LikesPale, LikesLager, (medium LikesHoppy, LikesBitter)
+            if (CheckPilsener(loggedInUser))
+            {
+                //pull pilseners from DB
+                var pilseners = await GetPilseners();
+            }
+
+            //American - Style India Pale Ale xxxx --points from: LikesPale, LikesHoppy, LikesBitter, LikesIPA
+
+            //Session India Pale Ale xx --points from: LikesSesson, LikesHoppy, LikesBitter, LikesIPA
+
+            //American - Style Pale Ale xxxxx-- points from: LikesPale, LikesHoppy, LikesBitter, LikesPaleAle
+
+            //Extra Special Bitter xx-- points from: LikesBitter, LikesMalty, LikesMiddling, LikesAle
+
+            //American - Style Wheat Wine Ale x --points from: LikesFruity, LikesWheat, LikesStrong, LikesAle
+
+            //American Style Stout x-- points from: LikesDark, LikesMalty, LikesStout, LikesCoffee
+
+            //French & Belgian - Style Saison x --points from: LikesPale, LikesBelgian, LikesSaison, LikesAle
+
+            //Belgian - Style Tripel x --points from: LikesPale, LikesStrong, LikesBelgian, LikesAle
+
+            //Wood - and Barrel - Aged Strong Beer x-- points from: LikesMiddling, LikesDark, LikesStrong, LikesBarrelAged
+
+            //American - Style Lager x --points from: LikesPale, LikesLager, LikesHoppy, LikesBitter
+
+            //Imperial or Double India Pale Ale xxxxxxxx --points from: LikesStrong, LikesIPA, LikesHoppy, LikesBitter
+
+            //Belgian - Style Flanders Old Bruin or Oud Red Ales x --points from: LikesSour, LikesSourBeer, LikesMiddling, LikesBelgian
+
+            //American - Style Imperial Porter x-- points from: LikesStrong, LikesPorter, LikesDark, LikesChocolate, LikesMalty
+
+            //German - Style Heller Bock/ Maibock x-- points from: LikesGerman, LikesPale, LikesStrong, (low LikesHoppy / bitter / malt ?)
+
+            //American - Style Imperial Stout x-- points from: LikesStrong, LikesDark, LikesMalty, LikesChocolate, LikesStout, LikesCoffee
+
+            //American - Style Barley Wine Ale x --points from: LikesStrong, LikesMiddling, LikesSweet, LikesFruity Strong Ale x
+
+            //Specialty Stouts x-- points from: LikesStrong, LikesDark, LikesMalty, LikesChocolate, LikesStout, LikesCoffee
+
+            //French and Belgian-Style Saison x --points from: LikesPale, LikesBelgian, LikesSaison, LikesAle
+
+            //Belgian Style Pale Ale x-- points from: LikesPale, LikesPaleAle, LikesBelgian, LikesAle
+
+            //Light American Wheat Ale or Lager with Yeast x --points from: LikesPale, LikesWheat
+
+            //Imperial Red Ale x-- points from: LikesStrong, LikesMiddling, LikesRedAle, LikesMalty, (LikesHoppy, LikesAle?)
+
+            //Fruit Wheat Ale or Lager with or without Yeast x-- points from: LikesFruity, LikesWheat
+
+
+
+
+
+
+
+            return RedirectToAction("Home", "Users");
+        }
+
+
+        public bool CheckPilsener(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault(); ;
+            if (userTaste.LikesPale > 6 && userTaste.LikesLager > 6 && userTaste.LikesHoppy > 2 && userTaste.LikesBitter > 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<List<BreweryDBBeer>> GetPilseners()
+        {
+            var pilsenerUrl = (APIKeys.BreweryDBAPIURL + "beers/?styleId=98&key=" + APIKeys.BreweryDBAPIKey);
+            List<BreweryDBBeer> pilseners = new List<BreweryDBBeer>();
+            HttpResponseMessage response = await client.GetAsync(pilsenerUrl);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<JObject>(responseBody);
+            var beers = result["data"].ToList();
+            for (var i = 0; i < beers.Count; i++)
+            {
+                BreweryDBBeer breweryDBBeer = new BreweryDBBeer();
+                var id = beers[i]["id"];
+                breweryDBBeer.BreweryDBBeerId = id.ToObject<string>();
+                var name = beers[i]["name"];
+                breweryDBBeer.Name = name.ToObject<string>();
+                if (beers[i]["style"] != null)
+                {
+                    var style = beers[i]["style"]["name"];
+                    if (style != null)
+                    {
+                        breweryDBBeer.StyleName = style.ToObject<string>();
+                    }
+                }
+                var abv = beers[i]["abv"];
+                if (abv != null)
+                {
+                    breweryDBBeer.Abv = abv.ToObject<double>();
+                }
+
+                string findBeerBreweryURL = (APIKeys.BreweryDBAPIURL + "beer/" + breweryDBBeer.BreweryDBBeerId + "/breweries/?key=" + APIKeys.BreweryDBAPIKey);
+                HttpResponseMessage thisResponse = await client.GetAsync(findBeerBreweryURL);
+                thisResponse.EnsureSuccessStatusCode();
+                string thisBreweryResponseBody = await thisResponse.Content.ReadAsStringAsync();
+                var thisBreweryResult = JsonConvert.DeserializeObject<JObject>(thisBreweryResponseBody);
+
+                var brewereyName = thisBreweryResult["data"][0]["name"];
+
+                breweryDBBeer.BreweryName = brewereyName.ToObject<string>();
+
+                pilseners.Add(breweryDBBeer);
+            }
+            return pilseners;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
        
         // GET: BreweryDBBeers
         public async Task<IActionResult> Index()
