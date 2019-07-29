@@ -58,28 +58,25 @@ namespace BeerMatchBoxService.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,LikesBitter,LikesSour,LikesHoppy,LikesMalty,LikesSweet,LikesStrong,LikesSession,LikesOrganic,LikesPaleAle,LikesIPA,LikesWestCoastIPA,LikesNewEnglandIPA,LikesStout,LikesPorter,LikesBrownAle,LikesAmber,LikesRedAle,LikesWheat,LikesHefeweizen,LikesBelgianWit,LikesSourBeer,LikesWildSour,LikesBerlinerWeisseSour,LikesGoseSour,LikesSaison,LikesBelgianDoubleTrippel")] UserTaste userTaste)
+        public async Task<IActionResult> Create([Bind("Id,UserId,LikesBitter,LikesFruity,LikesSour,LikesHoppy,LikesMalty,LikesChocolate,LikesCoffee,LikesSweet,LikesStrong,LikesSession,LikesPale,LikesMiddling,LikesDark,LikesBarrelAged,LikesLager,LikesAle,LikesPaleAle,LikesIPA,LikesESB,LikesStout,LikesPorter,LikesBrownAle,LikesRedAle,LikesWheat,LikesSourBeer,LikesSaison,LikesBelgian,LikesGerman")] UserTaste userTaste)
         {
             if (ModelState.IsValid)
             {
-                UserTaste newUserTaste = new UserTaste();
-
                 string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 User loggedInUser = _context.User.Where(u => u.IdentityUserId == userId).SingleOrDefault();
-                newUserTaste.UserId = loggedInUser.Id;
-                _context.Add(newUserTaste);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Home","Users");
+                userTaste.UserId = loggedInUser.Id;
+                _context.Add(userTaste);
+                await _context.SaveChangesAsync();               
             }
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", userTaste.UserId);
-            return View(userTaste);
+            return RedirectToAction("Home", "Users");
         }
 
         // GET: UserTastes/Edit/5
         public async Task<IActionResult> Edit()
         {
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            User loggedInUser = _context.User.Where(u => u.IdentityUserId == userId).SingleOrDefault();
+            string IdentityId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User loggedInUser = _context.User.Where(u => u.IdentityUserId == IdentityId).SingleOrDefault();
 
             var userTaste = await _context.UserTaste.FindAsync(loggedInUser.Id);
             if (userTaste == null)
@@ -95,7 +92,7 @@ namespace BeerMatchBoxService.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,LikesBitter,LikesSour,LikesHoppy,LikesMalty,LikesSweet,LikesStrong,LikesSession,LikesOrganic,LikesPaleAle,LikesIPA,LikesWestCoastIPA,LikesNewEnglandIPA,LikesStout,LikesPorter,LikesBrownAle,LikesAmber,LikesRedAle,LikesWheat,LikesHefeweizen,LikesBelgianWit,LikesSourBeer,LikesWildSour,LikesBerlinerWeisseSour,LikesGoseSour,LikesSaison,LikesBelgianDoubleTrippel")] UserTaste userTaste)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,LikesBitter,LIkesFruity,LikesSour,LikesHoppy,LikesMalty,LikesChocolate,LikesCoffee,LikesSweet,LikesStrong,LikesSession,LikesPale,LikesMiddling,LikesDark,LikesBarrelAged,LikesLager,LikesAle,LikesPaleAle,LikesIPA,LikesESB,LikesStout,LikesPorter,LikesBrownAle,LikesRedAle,LikesWheat,LikesSourBeer,LikesSaison,LikesBelgian,LikesGerman")] UserTaste userTaste)
         {
             if (id != userTaste.Id)
             {
@@ -120,10 +117,9 @@ namespace BeerMatchBoxService.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Home", "Users");
             }
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", userTaste.UserId);
-            return View(userTaste);
+            return RedirectToAction("Home", "Users");
         }
 
         // GET: UserTastes/Delete/5

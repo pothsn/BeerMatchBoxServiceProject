@@ -312,37 +312,86 @@ namespace BeerMatchBoxService.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(nullable: false),
                     LikesBitter = table.Column<int>(nullable: false),
+                    LikesFruity = table.Column<int>(nullable: false),
                     LikesSour = table.Column<int>(nullable: false),
                     LikesHoppy = table.Column<int>(nullable: false),
                     LikesMalty = table.Column<int>(nullable: false),
+                    LikesChocolate = table.Column<int>(nullable: false),
+                    LikesCoffee = table.Column<int>(nullable: false),
                     LikesSweet = table.Column<int>(nullable: false),
                     LikesStrong = table.Column<int>(nullable: false),
                     LikesSession = table.Column<int>(nullable: false),
-                    LikesOrganic = table.Column<int>(nullable: false),
+                    LikesPale = table.Column<int>(nullable: false),
+                    LikesMiddling = table.Column<int>(nullable: false),
+                    LikesDark = table.Column<int>(nullable: false),
+                    LikesBarrelAged = table.Column<int>(nullable: false),
+                    LikesLager = table.Column<int>(nullable: false),
+                    LikesAle = table.Column<int>(nullable: false),
                     LikesPaleAle = table.Column<int>(nullable: false),
                     LikesIPA = table.Column<int>(nullable: false),
-                    LikesWestCoastIPA = table.Column<int>(nullable: false),
-                    LikesNewEnglandIPA = table.Column<int>(nullable: false),
+                    LikesESB = table.Column<int>(nullable: false),
                     LikesStout = table.Column<int>(nullable: false),
                     LikesPorter = table.Column<int>(nullable: false),
                     LikesBrownAle = table.Column<int>(nullable: false),
-                    LikesAmber = table.Column<int>(nullable: false),
                     LikesRedAle = table.Column<int>(nullable: false),
                     LikesWheat = table.Column<int>(nullable: false),
-                    LikesHefeweizen = table.Column<int>(nullable: false),
-                    LikesBelgianWit = table.Column<int>(nullable: false),
                     LikesSourBeer = table.Column<int>(nullable: false),
-                    LikesWildSour = table.Column<int>(nullable: false),
-                    LikesBerlinerWeisseSour = table.Column<int>(nullable: false),
-                    LikesGoseSour = table.Column<int>(nullable: false),
                     LikesSaison = table.Column<int>(nullable: false),
-                    LikesBelgianDoubleTrippel = table.Column<int>(nullable: false)
+                    LikesBelgian = table.Column<int>(nullable: false),
+                    LikesGerman = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserTaste", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserTaste_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserTasteCopy",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(nullable: false),
+                    LikesBitter = table.Column<int>(nullable: false),
+                    LikesFruity = table.Column<int>(nullable: false),
+                    LikesSour = table.Column<int>(nullable: false),
+                    LikesHoppy = table.Column<int>(nullable: false),
+                    LikesMalty = table.Column<int>(nullable: false),
+                    LikesChocolate = table.Column<int>(nullable: false),
+                    LikesCoffee = table.Column<int>(nullable: false),
+                    LikesSweet = table.Column<int>(nullable: false),
+                    LikesStrong = table.Column<int>(nullable: false),
+                    LikesSession = table.Column<int>(nullable: false),
+                    LikesPale = table.Column<int>(nullable: false),
+                    LikesMiddling = table.Column<int>(nullable: false),
+                    LikesDark = table.Column<int>(nullable: false),
+                    LikesBarrelAged = table.Column<int>(nullable: false),
+                    LikesLager = table.Column<int>(nullable: false),
+                    LikesAle = table.Column<int>(nullable: false),
+                    LikesPaleAle = table.Column<int>(nullable: false),
+                    LikesIPA = table.Column<int>(nullable: false),
+                    LikesESB = table.Column<int>(nullable: false),
+                    LikesStout = table.Column<int>(nullable: false),
+                    LikesPorter = table.Column<int>(nullable: false),
+                    LikesBrownAle = table.Column<int>(nullable: false),
+                    LikesRedAle = table.Column<int>(nullable: false),
+                    LikesWheat = table.Column<int>(nullable: false),
+                    LikesSourBeer = table.Column<int>(nullable: false),
+                    LikesSaison = table.Column<int>(nullable: false),
+                    LikesBelgian = table.Column<int>(nullable: false),
+                    LikesGerman = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserTasteCopy", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserTasteCopy_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -421,6 +470,11 @@ namespace BeerMatchBoxService.Migrations
                 name: "IX_UserTaste_UserId",
                 table: "UserTaste",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserTasteCopy_UserId",
+                table: "UserTasteCopy",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -451,6 +505,9 @@ namespace BeerMatchBoxService.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserTaste");
+
+            migrationBuilder.DropTable(
+                name: "UserTasteCopy");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
