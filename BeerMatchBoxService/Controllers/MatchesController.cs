@@ -29,7 +29,6 @@ namespace BeerMatchBoxService.Controllers
 
             List<Match> beers = new List<Match>();
 
-            //American - Style Pilsener xxxx --points from: LikesPale, LikesLager, (medium LikesHoppy, LikesBitter)
             if (CheckPilsener(loggedInUser))
             {
                 var pilseners = await GetBeers("98");
@@ -62,7 +61,6 @@ namespace BeerMatchBoxService.Controllers
                     beers.Add(paleAle);
                 }
             }
-
             if (CheckESB(loggedInUser))
             {
                 var esbs = await GetBeers("5");
@@ -71,35 +69,109 @@ namespace BeerMatchBoxService.Controllers
                     beers.Add(esb);
                 }
             }
+            if (CheckWheatWineAle(loggedInUser))
+            {
+                var wheatWineAles = await GetBeers("35");
+                foreach (Match wheatWineALe in wheatWineAles)
+                {
+                    beers.Add(wheatWineALe);
+                }
+            }
+            if (CheckStout(loggedInUser))
+            {
+                var stouts = await GetBeers("42");
+                foreach (Match stout in stouts)
+                {
+                    beers.Add(stout);
+                }
+            }
+            if (CheckSaison(loggedInUser))
+            {
+                var saisons = await GetBeers("72");
+                foreach (Match saison in saisons)
+                {
+                    beers.Add(saison);
+                }
+            }
+            if (CheckTripel(loggedInUser))
+            {
+                var tripels = await GetBeers("59");
+                foreach (Match tripel in tripels)
+                {
+                    beers.Add(tripel);
+                }
+            }
+            if (CheckBarrelAged(loggedInUser))
+            {
+                var barrelAgedStrongBeers = await GetBeers("135");
+                foreach (Match basb in barrelAgedStrongBeers)
+                {
+                    beers.Add(basb);
+                }
+            }
+            if (CheckLager(loggedInUser))
+            {
+                var lagers = await GetBeers("93");
+                foreach (Match lager in lagers)
+                {
+                    beers.Add(lager);
+                }
+            }
+            if (CheckDipa(loggedInUser))
+            {
+                var dipas = await GetBeers("173");
+                foreach (Match dipa in dipas)
+                {
+                    beers.Add(dipa);
+                }
+            }
+            if (CheckFlanders(loggedInUser))
+            {
+                var bsfobs = await GetBeers("57");
+                foreach (Match bsfob in bsfobs)
+                {
+                    beers.Add(bsfob);
+                }
+            }
+            if (CheckImperialPorter(loggedInUser))
+            {
+                var imperialPorters = await GetBeers("158");
+                foreach (Match imperialPorter in imperialPorters)
+                {
+                    beers.Add(imperialPorter);
+                }
+            }
+            if (CheckHeller(loggedInUser))
+            {
+                var hellers = await GetBeers("89");
+                foreach (Match heller in hellers)
+                {
+                    beers.Add(heller);
+                }
+            }
+            if (CheckImperialStout(loggedInUser))
+            {
+                var imperialStouts = await GetBeers("16");
+                foreach (Match imperialStout in imperialStouts)
+                {
+                    beers.Add(imperialStout);
+                }
+            }
+            if (CheckBarleyWine(loggedInUser))
+            {
+                var barleyWines = await GetBeers("34");
+                foreach (Match barleyWine in barleyWines)
+                {
+                    beers.Add(barleyWine);
+                }
+            }
 
 
 
 
 
 
-            //Extra Special Bitter xx-- points from: LikesBitter, LikesMalty, LikesMiddling, LikesAle
 
-            //American - Style Wheat Wine Ale x --points from: LikesFruity, LikesWheat, LikesStrong, LikesAle
-
-            //American Style Stout x-- points from: LikesDark, LikesMalty, LikesStout, LikesCoffee
-
-            //French & Belgian - Style Saison x --points from: LikesPale, LikesBelgian, LikesSaison, LikesAle
-
-            //Belgian - Style Tripel x --points from: LikesPale, LikesStrong, LikesBelgian, LikesAle
-
-            //Wood - and Barrel - Aged Strong Beer x-- points from: LikesMiddling, LikesDark, LikesStrong, LikesBarrelAged
-
-            //American - Style Lager x --points from: LikesPale, LikesLager, LikesHoppy, LikesBitter
-
-            //Imperial or Double India Pale Ale xxxxxxxx --points from: LikesStrong, LikesIPA, LikesHoppy, LikesBitter
-
-            //Belgian - Style Flanders Old Bruin or Oud Red Ales x --points from: LikesSour, LikesSourBeer, LikesMiddling, LikesBelgian
-
-            //American - Style Imperial Porter x-- points from: LikesStrong, LikesPorter, LikesDark, LikesChocolate, LikesMalty
-
-            //German - Style Heller Bock/ Maibock x-- points from: LikesGerman, LikesPale, LikesStrong, (low LikesHoppy / bitter / malt ?)
-
-            //American - Style Imperial Stout x-- points from: LikesStrong, LikesDark, LikesMalty, LikesChocolate, LikesStout, LikesCoffee
 
             //American - Style Barley Wine Ale x --points from: LikesStrong, LikesMiddling, LikesSweet, LikesFruity Strong Ale x
 
@@ -189,21 +261,31 @@ namespace BeerMatchBoxService.Controllers
             string thisNewBreweryResponseBody = await thisNewResponse.Content.ReadAsStringAsync();
             var thisNewBreweryResult = JsonConvert.DeserializeObject<JObject>(thisNewBreweryResponseBody);
 
-            var breweryLat = thisNewBreweryResult["data"][0]["latitude"];
-            beer.BeerBreweryLatitude = breweryLat.ToObject<decimal>();
-
-            var breweryLong = thisNewBreweryResult["data"][0]["longitude"];
-            beer.BeerBreweryLongitude = breweryLong.ToObject<decimal>();
-
-            var breweryAddress = thisNewBreweryResult["data"][0]["streetAddress"];
-            beer.BeerBreweryAddress = breweryAddress.ToObject<string>();
-
-            var breweryCity = thisNewBreweryResult["data"][0]["locality"];
-            beer.BeerBreweryCity = breweryCity.ToObject<string>();
-
-            var breweryState = thisNewBreweryResult["data"][0]["region"];
-            beer.BeerBreweryState = breweryState.ToObject<string>();
-
+            if (thisNewBreweryResult["data"][0]["latitude"] != null)
+            {
+                var breweryLat = thisNewBreweryResult["data"][0]["latitude"];
+                beer.BeerBreweryLatitude = breweryLat.ToObject<decimal>();
+            }
+            if (thisNewBreweryResult["data"][0]["longitude"] != null)
+            {
+                var breweryLong = thisNewBreweryResult["data"][0]["longitude"];
+                beer.BeerBreweryLongitude = breweryLong.ToObject<decimal>();
+            }
+            if (thisNewBreweryResult["data"][0]["streetAddress"] != null)
+            {
+                var breweryAddress = thisNewBreweryResult["data"][0]["streetAddress"];
+                beer.BeerBreweryAddress = breweryAddress.ToObject<string>();
+            }
+            if (thisNewBreweryResult["data"][0]["locality"] != null)
+            {
+                var breweryCity = thisNewBreweryResult["data"][0]["locality"];
+                beer.BeerBreweryCity = breweryCity.ToObject<string>();
+            }
+            if (thisNewBreweryResult["data"][0]["region"] != null)
+            {
+                var breweryState = thisNewBreweryResult["data"][0]["region"];
+                beer.BeerBreweryState = breweryState.ToObject<string>();
+            }
             return beer;
         }
 
@@ -250,6 +332,162 @@ namespace BeerMatchBoxService.Controllers
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
             if (userTaste.LikesBitter > 6 && userTaste.LikesMalty > 6 && userTaste.LikesMiddling > 6 && userTaste.LikesAle > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckWheatWineAle(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesFruity > 6 && userTaste.LikesWheat > 6 && userTaste.LikesStrong > 6 && userTaste.LikesAle > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckStout(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesDark > 6 && userTaste.LikesMalty > 6 && userTaste.LikesStout > 6 && userTaste.LikesCoffee > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckSaison(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesPale > 6 && userTaste.LikesBelgian > 6 && userTaste.LikesSaison > 6 && userTaste.LikesAle > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckTripel(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesPale > 6 && userTaste.LikesStrong > 6 && userTaste.LikesBelgian > 6 && userTaste.LikesAle > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckBarrelAged(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesMiddling > 6 && userTaste.LikesDark > 6 && userTaste.LikesStrong > 6 && userTaste.LikesBarrelAged > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckLager(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesPale > 6 && userTaste.LikesLager > 6 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckDipa(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesStrong > 6 && userTaste.LikesIPA > 6 && userTaste.LikesHoppy > 6 && userTaste.LikesBitter > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckFlanders(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesSour > 6 && userTaste.LikesSourBeer > 6 && userTaste.LikesMiddling > 6 && userTaste.LikesBelgian > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckImperialPorter(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesStrong > 6 && userTaste.LikesPorter > 6 && userTaste.LikesDark > 6 && userTaste.LikesChocolate > 6 && userTaste.LikesMalty > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckHeller(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesGerman > 6 && userTaste.LikesPale > 6 && userTaste.LikesStrong > 6 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3 && userTaste.LikesMalty > 5)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckImperialStout(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesStrong > 6 && userTaste.LikesDark > 6 && userTaste.LikesMalty > 6 && userTaste.LikesChocolate > 6 && userTaste.LikesStout > 6 && userTaste.LikesCoffee > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckBarleyWine(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesStrong > 6 && userTaste.LikesMiddling > 6 && userTaste.LikesSweet > 6 && userTaste.LikesFruity > 6)
             {
                 return true;
             }
