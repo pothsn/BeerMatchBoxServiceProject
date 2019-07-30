@@ -12,7 +12,7 @@ namespace BeerMatchBoxService.Models
         [Key]
         public string Id { get; set; }
 
-        public string MatchId { get; set; }
+        public string BreweryDBBeerId { get; set; }
 
         public string Name { get; set; }
 
@@ -24,7 +24,7 @@ namespace BeerMatchBoxService.Models
 
         public int? GlasswareId { get; set; }
 
-        public int? StyleId { get; set; }
+        public string StyleId { get; set; }
 
         public string StyleName { get; set; }
 
@@ -36,8 +36,9 @@ namespace BeerMatchBoxService.Models
 
         public BreweryDBLabelHolder Images { get; set; }
 
-        [ForeignKey("BreweryDBBrewery")]
+        //[ForeignKey("BreweryDBBrewery")]
         public string BreweryDBBreweryId { get; set; }
+        [NotMapped]
         public BreweryDBBeer BreweryDBBrewery { get; set; }
 
         public decimal? BeerBreweryLatitude { get; set; }

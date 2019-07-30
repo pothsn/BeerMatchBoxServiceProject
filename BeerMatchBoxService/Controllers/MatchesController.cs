@@ -222,20 +222,17 @@ namespace BeerMatchBoxService.Controllers
                 }
             }
 
+            var userBeersAverageAbv = GetUserBeersAverageAbv(loggedInUser);
 
+            var filteredBeers = await FilterBeers(beers, userBeersAverageAbv);
 
+            foreach (Match beer in filteredBeers)
+            {
+                await GetBreweryInfo(beer);
+            }
 
-
-
-
-
-            //Imperial Red Ale x-- points from: LikesStrong, LikesMiddling, LikesRedAle, LikesMalty, (LikesHoppy, LikesAle?)
-
-            //Fruit Wheat Ale or Lager with or without Yeast x-- points from: LikesFruity, LikesWheat
-
-            return View(beers);
+            return View(filteredBeers);
         }
-
 
         public bool CheckPilsener(User loggedInUser)
         {
@@ -248,91 +245,6 @@ namespace BeerMatchBoxService.Controllers
             {
                 return false;
             }
-        }
-
-        public async Task<List<Match>> GetBeers(string styleId)
-        {
-            var url = (APIKeys.BreweryDBAPIURL + "beers/?styleId=" + styleId + "&key=" + APIKeys.BreweryDBAPIKey);
-            List<Match> beerList = new List<Match>();
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<JObject>(responseBody);
-            var beers = result["data"].ToList();
-            for (var i = 0; i < beers.Count; i++)
-            {
-                Match beer = new Match();
-                var id = beers[i]["id"];
-                beer.MatchId = id.ToObject<string>();
-                var name = beers[i]["name"];
-                beer.Name = name.ToObject<string>();
-                if (beers[i]["style"] != null)
-                {
-                    var style = beers[i]["style"]["name"];
-                    if (style != null)
-                    {
-                        beer.StyleName = style.ToObject<string>();
-                    }
-                }
-                var abv = beers[i]["abv"];
-                if (abv != null)
-                {
-                    beer.Abv = abv.ToObject<double>();
-                }
-
-                //await GetBreweryInfo(beer);
-
-                beerList.Add(beer);
-            }
-            return beerList;
-        }
-
-        public async Task<Match> GetBreweryInfo(Match beer)
-        {
-            string findBeerBreweryUrl = (APIKeys.BreweryDBAPIURL + "beer/" + beer.MatchId + "/breweries/?key=" + APIKeys.BreweryDBAPIKey);
-            HttpResponseMessage thisResponse = await client.GetAsync(findBeerBreweryUrl);
-            thisResponse.EnsureSuccessStatusCode();
-            string thisBreweryResponseBody = await thisResponse.Content.ReadAsStringAsync();
-            var thisBreweryResult = JsonConvert.DeserializeObject<JObject>(thisBreweryResponseBody);
-
-            var breweryId = thisBreweryResult["data"][0]["id"];
-            beer.BreweryDBBreweryId = breweryId.ToObject<string>();
-
-            var brewereyName = thisBreweryResult["data"][0]["name"];
-            beer.BreweryName = brewereyName.ToObject<string>();
-
-            string findBeerBreweryLocationUrl = (APIKeys.BreweryDBAPIURL + "brewery/" + beer.BreweryDBBreweryId + "/locations/?key=" + APIKeys.BreweryDBAPIKey);
-            HttpResponseMessage thisNewResponse = await client.GetAsync(findBeerBreweryLocationUrl);
-            thisNewResponse.EnsureSuccessStatusCode();
-            string thisNewBreweryResponseBody = await thisNewResponse.Content.ReadAsStringAsync();
-            var thisNewBreweryResult = JsonConvert.DeserializeObject<JObject>(thisNewBreweryResponseBody);
-
-            var breweryLat = thisNewBreweryResult["data"][0]["latitude"];
-            if (breweryLat != null)
-            {              
-                beer.BeerBreweryLatitude = breweryLat.ToObject<decimal>();
-            }
-            var breweryLong = thisNewBreweryResult["data"][0]["longitude"];
-            if (breweryLong["data"][0]["longitude"] != null)
-            {
-                beer.BeerBreweryLongitude = breweryLong.ToObject<decimal>();
-            }
-            var breweryAddress = thisNewBreweryResult["data"][0]["streetAddress"];
-            if (breweryAddress != null)
-            {
-                beer.BeerBreweryAddress = breweryAddress.ToObject<string>();
-            }
-            var breweryCity = thisNewBreweryResult["data"][0]["locality"];
-            if (breweryCity != null)
-            {                
-                beer.BeerBreweryCity = breweryCity.ToObject<string>();
-            }
-            var breweryState = thisNewBreweryResult["data"][0]["region"];
-            if (breweryState != null)
-            {
-                beer.BeerBreweryState = breweryState.ToObject<string>();
-            }
-            return beer;
         }
 
         public bool CheckIPA(User loggedInUser)
@@ -632,6 +544,129 @@ namespace BeerMatchBoxService.Controllers
             {
                 return false;
             }
+        }
+
+        public async Task<List<Match>> GetBeers(string styleId)
+        {
+            var url = (APIKeys.BreweryDBAPIURL + "beers/?styleId=" + styleId + "&key=" + APIKeys.BreweryDBAPIKey);
+            List<Match> beerList = new List<Match>();
+            HttpResponseMessage response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<JObject>(responseBody);
+            var beers = result["data"].ToList();
+            for (var i = 0; i < beers.Count; i++)
+            {
+                Match beer = new Match();
+                var id = beers[i]["id"];
+                beer.BreweryDBBeerId = id.ToObject<string>();
+                var name = beers[i]["name"];
+                beer.Name = name.ToObject<string>();
+                var abv = beers[i]["abv"];
+
+                if (abv != null)
+                {
+                    beer.Abv = abv.ToObject<double>();
+                }
+                var ibu = beers[i]["ibu"];
+                if (ibu != null)
+                {
+                    beer.Ibu = ibu.ToObject<double>();
+                }
+                beer.StyleId = styleId;
+                var style = beers[i]["style"]["name"];
+                if (style != null)
+                {
+                    beer.StyleName = style.ToObject<string>();
+                }
+                var description = beers[i]["description"];
+                if (description != null)
+                {
+                    beer.Description = description.ToObject<string>();
+                }                         
+                beerList.Add(beer);
+            }
+            return beerList;
+        }
+
+        public double? GetUserBeersAverageAbv(User loggedInUser)
+        {
+            var userBeers = _context.UserBeer.Where(b => b.UserId == loggedInUser.Id).ToList();
+            Double? userBeerAbvSum = new double();
+            for (var i = 0; i < userBeers.Count; i++)
+            {
+                userBeerAbvSum += userBeers[i].Abv;
+            }
+            var userBeerAbvAverage = userBeerAbvSum / userBeers.Count;
+
+            return userBeerAbvAverage;
+        }
+
+        public async Task<List<Match>> FilterBeers(List<Match> beers, double? userBeersAverageAbv)
+        {
+            //order list and cut off far ends before the loop?
+            var filteredBeers = new List<Match>();
+            var incrementor = .1;
+            while (filteredBeers.Count < 5)
+            {
+                foreach (Match beer in beers)
+                {
+                    if (beer.Abv < (userBeersAverageAbv + incrementor) && beer.Abv > (userBeersAverageAbv - incrementor))
+                    {
+                        filteredBeers.Add(beer);
+                    }
+                }
+                incrementor += .1;
+            }
+            return filteredBeers;
+        }
+
+        public async Task<Match> GetBreweryInfo(Match beer)
+        {
+            string findBeerBreweryUrl = (APIKeys.BreweryDBAPIURL + "beer/" + beer.BreweryDBBeerId + "/breweries/?key=" + APIKeys.BreweryDBAPIKey);
+            HttpResponseMessage thisResponse = await client.GetAsync(findBeerBreweryUrl);
+            thisResponse.EnsureSuccessStatusCode();
+            string thisBreweryResponseBody = await thisResponse.Content.ReadAsStringAsync();
+            var thisBreweryResult = JsonConvert.DeserializeObject<JObject>(thisBreweryResponseBody);
+
+            var breweryId = thisBreweryResult["data"][0]["id"];
+            beer.BreweryDBBreweryId = breweryId.ToObject<string>();
+
+            var brewereyName = thisBreweryResult["data"][0]["name"];
+            beer.BreweryName = brewereyName.ToObject<string>();
+
+            string findBeerBreweryLocationUrl = (APIKeys.BreweryDBAPIURL + "brewery/" + beer.BreweryDBBreweryId + "/locations/?key=" + APIKeys.BreweryDBAPIKey);
+            HttpResponseMessage thisNewResponse = await client.GetAsync(findBeerBreweryLocationUrl);
+            thisNewResponse.EnsureSuccessStatusCode();
+            string thisNewBreweryResponseBody = await thisNewResponse.Content.ReadAsStringAsync();
+            var thisNewBreweryResult = JsonConvert.DeserializeObject<JObject>(thisNewBreweryResponseBody);
+
+            var breweryLat = thisNewBreweryResult["data"][0]["latitude"];
+            if (breweryLat != null)
+            {
+                beer.BeerBreweryLatitude = breweryLat.ToObject<decimal>();
+            }
+            var breweryLong = thisNewBreweryResult["data"][0]["longitude"];
+            if (breweryLong != null)
+            {
+                beer.BeerBreweryLongitude = breweryLong.ToObject<decimal>();
+            }
+            var breweryAddress = thisNewBreweryResult["data"][0]["streetAddress"];
+            if (breweryAddress != null)
+            {
+                beer.BeerBreweryAddress = breweryAddress.ToObject<string>();
+            }
+            var breweryCity = thisNewBreweryResult["data"][0]["locality"];
+            if (breweryCity != null)
+            {
+                beer.BeerBreweryCity = breweryCity.ToObject<string>();
+            }
+            var breweryState = thisNewBreweryResult["data"][0]["region"];
+            if (breweryState != null)
+            {
+                beer.BeerBreweryState = breweryState.ToObject<string>();
+            }
+            return beer;
         }
 
     }
