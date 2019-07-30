@@ -165,6 +165,62 @@ namespace BeerMatchBoxService.Controllers
                     beers.Add(barleyWine);
                 }
             }
+            if (CheckStrongAle(loggedInUser))
+            {
+                var strongAles = await GetBeers("14");
+                foreach (Match strongAle in strongAles)
+                {
+                    beers.Add(strongAle);
+                }
+            }
+            if (CheckSpecialtyStout(loggedInUser))
+            {
+                var specialtyStouts = await GetBeers("44");
+                foreach (Match specialtyStout in specialtyStouts)
+                {
+                    beers.Add(specialtyStout);
+                }
+            }
+            if (CheckSpecialBitter(loggedInUser))
+            {
+                var specialBitters = await GetBeers("4");
+                foreach (Match specialBitter in specialBitters)
+                {
+                    beers.Add(specialBitter);
+                }
+            }
+            if (CheckBelgianPale(loggedInUser))
+            {
+                var belgianPales = await GetBeers("62");
+                foreach (Match belgianPale in belgianPales)
+                {
+                    beers.Add(belgianPale);
+                }
+            }
+            if (CheckLightAmericanWheatAleOrLagerWithYeast(loggedInUser))
+            {
+                var awys = await GetBeers("112");
+                foreach (Match awy in awys)
+                {
+                    beers.Add(awy);
+                }
+            }
+            if (CheckImperialRedAle(loggedInUser))
+            {
+                var iras = await GetBeers("33");
+                foreach (Match ira in iras)
+                {
+                    beers.Add(ira);
+                }
+            }
+            if (CheckFruitWheatAleOrLagerWithoutYeast(loggedInUser))
+            {
+                var fwawowys = await GetBeers("114");
+                foreach (Match fwawowy in fwawowys)
+                {
+                    beers.Add(fwawowy);
+                }
+            }
 
 
 
@@ -172,16 +228,6 @@ namespace BeerMatchBoxService.Controllers
 
 
 
-
-            //American - Style Barley Wine Ale x --points from: LikesStrong, LikesMiddling, LikesSweet, LikesFruity Strong Ale x
-
-            //Specialty Stouts x-- points from: LikesStrong, LikesDark, LikesMalty, LikesChocolate, LikesStout, LikesCoffee
-
-            //French and Belgian-Style Saison x --points from: LikesPale, LikesBelgian, LikesSaison, LikesAle
-
-            //Belgian Style Pale Ale x-- points from: LikesPale, LikesPaleAle, LikesBelgian, LikesAle
-
-            //Light American Wheat Ale or Lager with Yeast x --points from: LikesPale, LikesWheat
 
             //Imperial Red Ale x-- points from: LikesStrong, LikesMiddling, LikesRedAle, LikesMalty, (LikesHoppy, LikesAle?)
 
@@ -234,7 +280,7 @@ namespace BeerMatchBoxService.Controllers
                     beer.Abv = abv.ToObject<double>();
                 }
 
-                await GetBreweryInfo(beer);
+                //await GetBreweryInfo(beer);
 
                 beerList.Add(beer);
             }
@@ -496,5 +542,97 @@ namespace BeerMatchBoxService.Controllers
                 return false;
             }
         }
+
+        public bool CheckStrongAle(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesStrong > 6 && userTaste.LikesMiddling > 6 && userTaste.LikesMalty > 6 && userTaste.LikesAle > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckSpecialtyStout(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesStrong > 6 && userTaste.LikesDark > 6 && userTaste.LikesMalty > 6 && userTaste.LikesChocolate > 6 && userTaste.LikesStout > 6 && userTaste.LikesCoffee > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckSpecialBitter(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesMiddling > 6 && userTaste.LikesMalty > 5 && userTaste.LikesHoppy > 5 && userTaste.LikesBitter > 6 && userTaste.LikesSweet > 5)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckBelgianPale(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesPale > 6 && userTaste.LikesPaleAle > 5 && userTaste.LikesBelgian > 5 && userTaste.LikesAle > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckLightAmericanWheatAleOrLagerWithYeast(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesPale > 6 && userTaste.LikesWheat > 5 && userTaste.LikesLager > 5 && userTaste.LikesAle > 6 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3 && userTaste.LikesFruity > 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckImperialRedAle(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesStrong > 6 && userTaste.LikesMiddling > 5 && userTaste.LikesRedAle > 5 && userTaste.LikesMalty > 6 && userTaste.LikesHoppy > 6 && userTaste.LikesAle > 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckFruitWheatAleOrLagerWithoutYeast(User loggedInUser)
+        {
+            var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            if (userTaste.LikesFruity > 7 && userTaste.LikesWheat > 6 && userTaste.LikesLager > 5 && userTaste.LikesLager > 5 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }
