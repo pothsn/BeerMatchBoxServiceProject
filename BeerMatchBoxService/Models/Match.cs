@@ -41,16 +41,16 @@ namespace BeerMatchBoxService.Models
         [NotMapped]
         public BreweryDBBeer BreweryDBBrewery { get; set; }
 
-        public decimal? BeerBreweryLatitude { get; set; }
+        //public decimal? BeerBreweryLatitude { get; set; }
 
-        public decimal? BeerBreweryLongitude { get; set; }
+        //public decimal? BeerBreweryLongitude { get; set; }
 
-        public string BeerBreweryAddress { get; set; }
+        //public string BeerBreweryAddress { get; set; }
 
-        public string BeerBreweryCity { get; set; }
+        //public string BeerBreweryCity { get; set; }
 
-        public string BeerBreweryState { get; set; }
+        //public string BeerBreweryState { get; set; }
 
-        public int MatchRating { get; set; }
+        //public int MatchRating { get; set; }
     }
 }

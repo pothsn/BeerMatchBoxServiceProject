@@ -1,0 +1,82 @@
+﻿@model BeerMatchBoxService.Models.BreweryDBBrewery
+@{
+    ViewData["Title"] = "GetMatchBreweryInfo";
+}
+
+
+
+
+<h2>Brewery Information</h2>
+
+
+<div class="row">
+    <div id="map"></div>
+
+    
+</div>
+
+<br />
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+    </dl>
+</div>
+<div>  
+    <a asp-controller="Matches" asp-action="GetMatches">Back to matches</a>
+</div>
+
+@section Scripts{
+       <script src=@($"https://maps.googleapis.com/maps/api/js?key={@ViewBag.GoogleMapsAPIKey}&callback=initMap")
+               async defer></script>
+
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+        }
+    </style>
+
+    <script>
+        var brewery = @Html.Raw(Json.Serialize(Model));
+
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: brewery.latitude, lng: brewery.longitude },
+                zoom: 8
+            });
+
+            var marker = new google.maps.Marker({
+                position: { lat: brewery.latitude, lng: brewery.longitude },
+                map: map
+            })
+
+        }
+    </script>
+
+}
+

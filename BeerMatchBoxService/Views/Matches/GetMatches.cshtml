@@ -45,7 +45,7 @@
                     @Html.DisplayFor(modelItem => item.BreweryName)
                 </td>
                 <td>
-                    <a asp-controller="Matches" asp-action="GetMatchInfo" asp-route-brewerydbbeerid="@item.BreweryDBBeerId">View match information</a>
+                    <a asp-controller="Matches" asp-action="GetMatchBreweryInfo" asp-route-brewerydbbreweryid="@item.BreweryDBBreweryId">Brewery information</a>
                 </td>
             </tr>
         }
@@ -112,19 +112,5 @@
               }
             }
         });
-
-
-
-
     </script>
-
-
-
-
-
-
-
-
-
-
 }

@@ -676,39 +676,106 @@ namespace BeerMatchBoxService.Controllers
             var brewereyName = thisBreweryResult["data"][0]["name"];
             beer.BreweryName = brewereyName.ToObject<string>();
 
-            string findBeerBreweryLocationUrl = (APIKeys.BreweryDBAPIURL + "brewery/" + beer.BreweryDBBreweryId + "/locations/?key=" + APIKeys.BreweryDBAPIKey);
+            //string findBeerBreweryLocationUrl = (APIKeys.BreweryDBAPIURL + "brewery/" + beer.BreweryDBBreweryId + "/locations/?key=" + APIKeys.BreweryDBAPIKey);
+            //HttpResponseMessage thisNewResponse = await client.GetAsync(findBeerBreweryLocationUrl);
+            //thisNewResponse.EnsureSuccessStatusCode();
+            //string thisNewBreweryResponseBody = await thisNewResponse.Content.ReadAsStringAsync();
+            //var thisNewBreweryResult = JsonConvert.DeserializeObject<JObject>(thisNewBreweryResponseBody);
+
+            //var breweryLat = thisNewBreweryResult["data"][0]["latitude"];
+            //if (breweryLat != null)
+            //{
+            //    beer.BeerBreweryLatitude = breweryLat.ToObject<decimal>();
+            //}
+            //var breweryLong = thisNewBreweryResult["data"][0]["longitude"];
+            //if (breweryLong != null)
+            //{
+            //    beer.BeerBreweryLongitude = breweryLong.ToObject<decimal>();
+            //}
+            //var breweryAddress = thisNewBreweryResult["data"][0]["streetAddress"];
+            //if (breweryAddress != null)
+            //{
+            //    beer.BeerBreweryAddress = breweryAddress.ToObject<string>();
+            //}
+            //var breweryCity = thisNewBreweryResult["data"][0]["locality"];
+            //if (breweryCity != null)
+            //{
+            //    beer.BeerBreweryCity = breweryCity.ToObject<string>();
+            //}
+            //var breweryState = thisNewBreweryResult["data"][0]["region"];
+            //if (breweryState != null)
+            //{
+            //    beer.BeerBreweryState = breweryState.ToObject<string>();
+            //}
+            return beer;
+        }
+
+        public async Task<IActionResult> GetMatchBreweryInfo(string BreweryDBBreweryId)
+        {
+            ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;
+            string findBeerBreweryLocationUrl = (APIKeys.BreweryDBAPIURL + "brewery/" + BreweryDBBreweryId + "/locations/?key=" + APIKeys.BreweryDBAPIKey);
             HttpResponseMessage thisNewResponse = await client.GetAsync(findBeerBreweryLocationUrl);
             thisNewResponse.EnsureSuccessStatusCode();
             string thisNewBreweryResponseBody = await thisNewResponse.Content.ReadAsStringAsync();
-            var thisNewBreweryResult = JsonConvert.DeserializeObject<JObject>(thisNewBreweryResponseBody);
+            var data = JsonConvert.DeserializeObject<JObject>(thisNewBreweryResponseBody);
 
-            var breweryLat = thisNewBreweryResult["data"][0]["latitude"];
+            BreweryDBBrewery brewery = new BreweryDBBrewery();
+
+
+            brewery.BreweryDBBreweryId = BreweryDBBreweryId;
+
+            var name = data["data"][0]["name"];
+            brewery.Name = name.ToObject<string>();
+
+
+
+
+            var breweryLat = data["data"][0]["latitude"];
             if (breweryLat != null)
             {
-                beer.BeerBreweryLatitude = breweryLat.ToObject<decimal>();
+                brewery.Latitude = breweryLat.ToObject<decimal>();
             }
-            var breweryLong = thisNewBreweryResult["data"][0]["longitude"];
+            var breweryLong = data["data"][0]["longitude"];
             if (breweryLong != null)
             {
-                beer.BeerBreweryLongitude = breweryLong.ToObject<decimal>();
+                brewery.Longitude = breweryLong.ToObject<decimal>();
             }
-            var breweryAddress = thisNewBreweryResult["data"][0]["streetAddress"];
+            var breweryAddress = data["data"][0]["streetAddress"];
             if (breweryAddress != null)
             {
-                beer.BeerBreweryAddress = breweryAddress.ToObject<string>();
+                brewery.Address = breweryAddress.ToObject<string>();
             }
-            var breweryCity = thisNewBreweryResult["data"][0]["locality"];
+            var breweryCity = data["data"][0]["locality"];
             if (breweryCity != null)
             {
-                beer.BeerBreweryCity = breweryCity.ToObject<string>();
+                brewery.City = breweryCity.ToObject<string>();
             }
-            var breweryState = thisNewBreweryResult["data"][0]["region"];
+            var breweryState = data["data"][0]["region"];
             if (breweryState != null)
             {
-                beer.BeerBreweryState = breweryState.ToObject<string>();
+                brewery.State = breweryState.ToObject<string>();
             }
-            return beer;
+
+
+            return View(brewery);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
