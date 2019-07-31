@@ -620,7 +620,7 @@ namespace BeerMatchBoxService.Controllers
             {
                 foreach (Match beer in beers)
                 {
-                    if (beer.Abv < (userBeersAverageAbv + incrementor) && beer.Abv > (userBeersAverageAbv - incrementor))
+                    if (beer.Abv < (userBeersAverageAbv + incrementor) && beer.Abv > (userBeersAverageAbv - incrementor) && filteredBeers.Count < 5)
                     {
                         filteredBeers.Add(beer);
                     }
