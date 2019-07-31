@@ -231,7 +231,16 @@ namespace BeerMatchBoxService.Controllers
                 await GetBreweryInfo(beer);
             }
 
-            return View(filteredBeers);
+            var doughnutSections = await GenerateDoughnut(filteredBeers);
+
+
+            var viewModel = new GetMatchesViewModel();
+            viewModel.Matches = filteredBeers;
+            viewModel.UserTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            viewModel.DoughnutSections = doughnutSections;
+
+
+            return View(viewModel);
         }
 
         public bool CheckPilsener(User loggedInUser)
@@ -619,6 +628,58 @@ namespace BeerMatchBoxService.Controllers
                 incrementor += .1;
             }
             return filteredBeers;
+        }
+
+        public async Task<List<DoughnutSection>> GenerateDoughnut(List<Match> beers)
+        {
+            var doughnutSections = new List<DoughnutSection>();
+            
+            foreach (Match beer in beers)
+            {
+                int numberOfSlices = doughnutSections.Count(i => i.StyleId == beer.StyleId);
+                switch (numberOfSlices)
+                {
+                    case 0:
+                        DoughnutSection newDoughnutSection = new DoughnutSection();
+                        newDoughnutSection.StyleId = beer.StyleId;
+                        newDoughnutSection.StyleName = beer.StyleName;
+                        newDoughnutSection.Percentage += 20;
+                        doughnutSections.Add(newDoughnutSection);
+                        break;
+                    default:
+                        var thisDougnutSection = doughnutSections.Find(s => s.StyleId == beer.StyleId);
+                        thisDougnutSection.Percentage += 20;
+                        break;
+                }
+
+
+
+
+                //foreach (DoughnutSection doughnutSection in doughnutSections)
+                //{
+                //    if (beer.StyleId != doughnutSection.StyleId)
+                //    {
+                //        newSliceNeeded = true;
+                //    }
+                //    else
+                //    {
+                //        newSliceNeeded = false;
+                //    }
+                //}
+                //if (newSliceNeeded == true)
+                //{
+                //    DoughnutSection newDoughnutSection = new DoughnutSection();
+                //    newDoughnutSection.StyleId = beer.StyleId;
+                //    newDoughnutSection.StyleName = beer.StyleName;
+                //    newDoughnutSection.Percentage += 20;
+                //    doughnutSections.Add(newDoughnutSection);
+                //}
+                //else
+                //{
+                //    doughnutSection.Percentage += 20;
+                //}
+            } 
+            return doughnutSections;
         }
 
         public async Task<Match> GetBreweryInfo(Match beer)

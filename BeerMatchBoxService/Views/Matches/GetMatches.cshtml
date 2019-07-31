@@ -1,0 +1,86 @@
+﻿@model BeerMatchBoxService.Models.GetMatchesViewModel
+@{
+    ViewData["Title"] = "GetMatches";
+}
+
+<h2>Matches</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Style Name
+            </th>
+            <th>
+                ABV
+            </th>
+            <th>
+                Brewery Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Matches)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StyleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BreweryName)
+                </td>
+                <td>
+                    <a asp-controller="Matches" asp-action="GetMatchInfo" asp-route-brewerydbbeerid="@item.BreweryDBBeerId">View match information</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script>
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: [20, 10],
+            options: options
+        });
+
+        
+
+        options = {
+            scales: {
+                xAxes: [{
+                    barPercentage: 0.5,
+                    barThickness: 6,
+                    maxBarThickness: 8,
+                    minBarLength: 2,
+                    gridLines: {
+                        offsetGridLines: true
+                    }
+                }]
+            }
+        };
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+}
