@@ -651,34 +651,14 @@ namespace BeerMatchBoxService.Controllers
                         thisDougnutSection.Percentage += 20;
                         break;
                 }
-
-
-
-
-                //foreach (DoughnutSection doughnutSection in doughnutSections)
-                //{
-                //    if (beer.StyleId != doughnutSection.StyleId)
-                //    {
-                //        newSliceNeeded = true;
-                //    }
-                //    else
-                //    {
-                //        newSliceNeeded = false;
-                //    }
-                //}
-                //if (newSliceNeeded == true)
-                //{
-                //    DoughnutSection newDoughnutSection = new DoughnutSection();
-                //    newDoughnutSection.StyleId = beer.StyleId;
-                //    newDoughnutSection.StyleName = beer.StyleName;
-                //    newDoughnutSection.Percentage += 20;
-                //    doughnutSections.Add(newDoughnutSection);
-                //}
-                //else
-                //{
-                //    doughnutSection.Percentage += 20;
-                //}
             } 
+            while (doughnutSections.Count < 5)
+            {
+                DoughnutSection newDoughnutSection = new DoughnutSection();
+                newDoughnutSection.StyleName = "N/A";
+                newDoughnutSection.Percentage = 0;
+                doughnutSections.Add(newDoughnutSection);
+            }
             return doughnutSections;
         }
 
