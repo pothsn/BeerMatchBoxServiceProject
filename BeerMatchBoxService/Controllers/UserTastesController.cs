@@ -92,7 +92,7 @@ namespace BeerMatchBoxService.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,LikesBitter,LIkesFruity,LikesSour,LikesHoppy,LikesMalty,LikesChocolate,LikesCoffee,LikesSweet,LikesStrong,LikesSession,LikesPale,LikesMiddling,LikesDark,LikesBarrelAged,LikesLager,LikesAle,LikesPaleAle,LikesIPA,LikesESB,LikesStout,LikesPorter,LikesBrownAle,LikesRedAle,LikesWheat,LikesSourBeer,LikesSaison,LikesBelgian,LikesGerman")] UserTaste userTaste)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,LikesBitter,LikesFruity,LikesSour,LikesHoppy,LikesMalty,LikesChocolate,LikesCoffee,LikesSweet,LikesStrong,LikesSession,LikesPale,LikesMiddling,LikesDark,LikesBarrelAged,LikesLager,LikesAle,LikesPaleAle,LikesIPA,LikesESB,LikesStout,LikesPorter,LikesBrownAle,LikesRedAle,LikesWheat,LikesSourBeer,LikesSaison,LikesBelgian,LikesGerman")] UserTaste userTaste)
         {
             if (id != userTaste.Id)
             {

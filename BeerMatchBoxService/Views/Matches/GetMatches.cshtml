@@ -47,7 +47,11 @@
   
     </tbody>
 </table>
-<canvas id="doughnut-chart" width="800" height="450"></canvas>
+
+<div>
+    <canvas id="doughnut-chart" width="400" height="225"></canvas>
+    <canvas id="bar-chart" width="400" height="225"></canvas>
+</div>
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <script>
@@ -72,55 +76,35 @@
               }
             }
         });
+    </script>
+    <script>
+        var userTastes = @Html.Raw(Json.Serialize(Model.UserTaste));
 
+        new Chart(document.getElementById("bar-chart"), {
+            type: 'bar',
+            data: {
+              labels: ["Bitter", "Fruit", "Sour", "Hoppy", "Malty", "Chocolate", "Coffee", "Sweet", "Strong", "Session", "Pale", "Middling", "Dark", "Barrel-Aged", "Lager", "Ale", "Pale Ale", "IPA", "ESB", "Stout", "Porter", "Brown", "Red", "Wheat", "Sour", "Saison", "Belgian", "German"],
+              datasets: [
+                {
+                  label: "Affinity",
+                  backgroundColor: ["#c94c4c", "#034f84","#ffef96","#77a8a8","#e0876a", "#c94c4c", "#034f84","#ffef96","#77a8a8","#e0876a", "#c94c4c", "#034f84","#ffef96","#77a8a8","#e0876a", "#c94c4c", "#034f84","#ffef96","#77a8a8","#e0876a", "#c94c4c", "#034f84","#ffef96","#77a8a8","#e0876a", "#c94c4c", "#034f84","#ffef96","#77a8a8","#e0876a", "#c94c4c", "#034f84","#ffef96","#77a8a8","#e0876a"],
+                  data: [userTastes.likesBitter, userTastes.likesFruity, userTastes.likesSour, userTastes.likesHoppy, userTastes.likesMalty, userTastes.likesChocolate, userTastes.likesCoffee, userTastes.likesSweet, userTastes.likesStrong, userTastes.likesSession, userTastes.likesPale, userTastes.likesMiddling, userTastes.likesDark, userTastes.likesBarrelAged, userTastes.likesLager, userTastes.likesAle, userTastes.likesPaleAle, userTastes.likesIPA, userTastes.likesESB, userTastes.likesStout, userTastes.likesPorter, userTastes.likesBrownAle, userTastes.likesRedAle, userTastes.likesWheat, userTastes.likesSourBeer, userTastes.likesSaison, userTastes.likesBelgian, userTastes.likesGerman]
+                }
+              ]
+            },
+            options: {
+              legend: { display: false },
+              title: {
+                display: true,
+                text: 'Your beer taste profile'
+              }
+            }
+        });
 
-
-
-
-
-
-
-
-
-        
-//        var data = {
-//            datasets: [{
-//                data: [doughnutSections[0].percentage, doughnutSections[1].percentage, doughnutSections[2].percentage, doughnutSections[3].percentage, doughnutSections[4].percentage, ]
-//            }],
-            
-//            // These labels appear in the legend and in the tooltips when hovering different arcs
-//            labels: [
-//                doughnutSections[0].styleName,
-//                doughnutSections[1].styleName,
-//                doughnutSections[2].styleName,
-//                doughnutSections[3].styleName,
-//                doughnutSections[4].styleName
-//            ]
-//        };
-//        var options = {
-//            color: [
-//                'red',    // color for data at index 0
-//                'blue',   // color for data at index 1
-//                'green',  // color for data at index 2
-//                'black',  // color for data at index 3
-//                'orange'  // color for data at index 4
-//]
-//        }
-
-//        var ctx = document.getElementById('myDoughnutChart').getContext('2d');
-
-//        var myDoughnutChart = new Chart(ctx, {
-//            type: 'doughnut',
-//            data: data,
-//            options: options
-//        });
-
-        
 
 
 
     </script>
-
 
 
 
