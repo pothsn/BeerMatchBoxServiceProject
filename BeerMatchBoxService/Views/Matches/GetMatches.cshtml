@@ -3,7 +3,12 @@
     ViewData["Title"] = "GetMatches";
 }
 
-<h2>Matches</h2>
+    <h2>Matches</h2>
+
+    <div>
+        <span class="b"><canvas id="doughnut-chart" width="400" height="225"></canvas></span>
+        <span class="b"><canvas id="bar-chart" width="400" height="225"></canvas></span>
+    </div>
 
 <table class="table">
     <thead>
@@ -48,12 +53,19 @@
     </tbody>
 </table>
 
-<div>
-    <canvas id="doughnut-chart" width="400" height="225"></canvas>
-    <canvas id="bar-chart" width="400" height="225"></canvas>
-</div>
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+
+    <style>
+        span.b {
+            display: inline-block;
+            width: 550px;
+            height: 325px;
+            padding: 5px;
+        }  
+         
+    </style>
+
     <script>
         var doughnutSections = @Html.Raw(Json.Serialize(Model.DoughnutSections));
 
