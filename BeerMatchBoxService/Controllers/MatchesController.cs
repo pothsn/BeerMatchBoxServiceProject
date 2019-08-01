@@ -739,21 +739,52 @@ namespace BeerMatchBoxService.Controllers
 
             var beers = await GetBeersWithCompatibleStyle(loggedInUser);
 
-            List<Match> preciseMatch = new List<Match>();
-            List<Match> somethingDifferent = new List<Match>();
+            var userBeersAverageAbv = await GetUserBeersAverageAbv(loggedInUser);
 
+            var filteredBeers = await FilterBeers(beers, userBeersAverageAbv);
 
+            foreach (Match beer in filteredBeers)
+            {
+                await GetBreweryInfo(beer);
+            }
 
+            var otherFilteredBeers = await FilterOtherBeers(beers, userBeersAverageAbv);
 
-
-
-
+            foreach (Match beer in otherFilteredBeers)
+            {
+                await GetBreweryInfo(beer);
+            }
 
             var viewModel = new GetBoxOptionsViewModel();
-            viewModel.PreciseMatch = preciseMatch;
-            viewModel.SomethingDifferent = somethingDifferent;
+            viewModel.PreciseMatch = filteredBeers;
+            viewModel.SomethingDifferent = otherFilteredBeers;
 
             return View(viewModel);
+        }
+
+        public async Task<List<Match>> FilterOtherBeers(List<Match> beers, double? userBeersAverageAbv)
+        {
+            //order list and cut off far ends before the loop?
+            var otherFilteredBeers = new List<Match>();
+            var incrementor = 3.1;
+            var secondIncrementor = 1.5;
+            var decrementor = 3.1;
+            var secondDecrementor = 1.5;
+            while (otherFilteredBeers.Count < 5)
+            {
+                foreach (Match beer in beers)
+                {
+                    if (otherFilteredBeers.Count < 5 && beer.Abv < userBeersAverageAbv + incrementor && beer.Abv > userBeersAverageAbv + secondIncrementor || otherFilteredBeers.Count < 5 && beer.Abv > userBeersAverageAbv - decrementor && beer.Abv < userBeersAverageAbv - secondDecrementor)
+                    {
+                        otherFilteredBeers.Add(beer);
+                    }
+                }
+                incrementor += .1;
+                secondIncrementor += .1;
+                decrementor += .1;
+                secondDecrementor += .1;
+            }
+            return otherFilteredBeers;
         }
     }
 }

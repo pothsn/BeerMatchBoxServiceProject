@@ -1,0 +1,94 @@
+﻿@model BeerMatchBoxService.Models.GetBoxOptionsViewModel
+
+@{
+    ViewData["Title"] = "GetBoxOptions";
+}
+
+<h2>Precise Match Box</h2>
+Beers included:
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Style Name
+            </th>
+            <th>
+                ABV
+            </th>
+            <th>
+                Brewery Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PreciseMatch)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StyleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BreweryName)
+                </td>
+                <td>
+                    <a asp-controller="Matches" asp-action="GetMatchBreweryInfo" asp-route-brewerydbbreweryid="@item.BreweryDBBreweryId">Brewery information</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h2>Something Different</h2>
+Beers included:
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Style Name
+            </th>
+            <th>
+                ABV
+            </th>
+            <th>
+                Brewery Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SomethingDifferent)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StyleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BreweryName)
+                </td>
+                <td>
+                    <a asp-controller="Matches" asp-action="GetMatchBreweryInfo" asp-route-brewerydbbreweryid="@item.BreweryDBBreweryId">Brewery information</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
