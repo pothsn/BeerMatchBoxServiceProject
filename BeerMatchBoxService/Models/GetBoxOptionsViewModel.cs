@@ -8,8 +8,9 @@ namespace BeerMatchBoxService.Models
     public class GetBoxOptionsViewModel
     {
         public List<Match> PreciseMatch { get; set; }
+        public List<string> PreciseMatchBeerNames { get; set; }
 
         public List<Match> SomethingDifferent { get; set; }
-
+        public List<string> SomethingDifferentBeerNames { get; set; }
     }
 }

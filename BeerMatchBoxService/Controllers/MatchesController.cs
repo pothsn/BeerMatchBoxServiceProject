@@ -769,6 +769,23 @@ namespace BeerMatchBoxService.Controllers
             viewModel.PreciseMatch = filteredBeers;
             viewModel.SomethingDifferent = otherFilteredBeers;
 
+            List<string> preciseMatchBeerNames = new List<string>();
+            List<string> somethingDifferentBeerNames = new List<string>();
+
+
+            foreach (Match beer in filteredBeers)
+            {
+                preciseMatchBeerNames.Add(beer.Name);
+            }
+
+            foreach (Match beer in otherFilteredBeers)
+            {
+                somethingDifferentBeerNames.Add(beer.Name);
+            }
+
+            viewModel.PreciseMatchBeerNames = preciseMatchBeerNames;
+            viewModel.SomethingDifferentBeerNames = somethingDifferentBeerNames;
+
             return View(viewModel);
         }
 

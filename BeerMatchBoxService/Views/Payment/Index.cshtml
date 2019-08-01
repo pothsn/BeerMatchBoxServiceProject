@@ -1,7 +1,33 @@
-﻿@{
+﻿@model BeerMatchBoxService.Models.GetBoxOptionsViewModel
+@{
     ViewData["Title"] = "Payment";
 }
 <br />
+
+
+<h2>You selected a box containing the following beers: </h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PreciseMatchBeerNames)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
 <div>
     <form action="/Payment/Processing" method="POST">
         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -16,3 +42,4 @@
         </script>
     </form>
 </div>
+

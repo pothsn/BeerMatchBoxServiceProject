@@ -68,7 +68,7 @@
 
     <script>
         var doughnutSections = @Html.Raw(Json.Serialize(Model.DoughnutSections));
-
+        
         new Chart(document.getElementById("doughnut-chart"), {
             type: 'doughnut',
             data: {
