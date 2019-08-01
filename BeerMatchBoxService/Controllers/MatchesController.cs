@@ -144,7 +144,7 @@ namespace BeerMatchBoxService.Controllers
             }
             if (CheckDipa(loggedInUser))
             {
-                var dipas = await GetBeers("173");
+                var dipas = await GetBeers("31");
                 foreach (Match dipa in dipas)
                 {
                     beers.Add(dipa);
