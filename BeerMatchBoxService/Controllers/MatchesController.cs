@@ -27,6 +27,31 @@ namespace BeerMatchBoxService.Controllers
             string IdentityId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User loggedInUser = _context.User.Where(u => u.IdentityUserId == IdentityId).SingleOrDefault();
 
+            var beers = await GetBeersWithCompatibleStyle(loggedInUser);
+
+            var userBeersAverageAbv = await GetUserBeersAverageAbv(loggedInUser);
+
+            var filteredBeers = await FilterBeers(beers, userBeersAverageAbv);
+
+            foreach (Match beer in filteredBeers)
+            {
+                await GetBreweryInfo(beer);
+            }
+
+            var doughnutSections = await GenerateDoughnut(filteredBeers);
+
+
+            var viewModel = new GetMatchesViewModel();
+            viewModel.Matches = filteredBeers;
+            viewModel.UserTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
+            viewModel.DoughnutSections = doughnutSections;
+
+
+            return View(viewModel);
+        }
+
+        public async Task <List<Match>> GetBeersWithCompatibleStyle(User loggedInUser)
+        {
             List<Match> beers = new List<Match>();
 
             if (CheckPilsener(loggedInUser))
@@ -221,27 +246,11 @@ namespace BeerMatchBoxService.Controllers
                     beers.Add(fwawowy);
                 }
             }
-
-            var userBeersAverageAbv = GetUserBeersAverageAbv(loggedInUser);
-
-            var filteredBeers = await FilterBeers(beers, userBeersAverageAbv);
-
-            foreach (Match beer in filteredBeers)
-            {
-                await GetBreweryInfo(beer);
-            }
-
-            var doughnutSections = await GenerateDoughnut(filteredBeers);
-
-
-            var viewModel = new GetMatchesViewModel();
-            viewModel.Matches = filteredBeers;
-            viewModel.UserTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            viewModel.DoughnutSections = doughnutSections;
-
-
-            return View(viewModel);
+            return (beers);
         }
+
+
+
 
         public bool CheckPilsener(User loggedInUser)
         {
@@ -592,13 +601,13 @@ namespace BeerMatchBoxService.Controllers
                 if (description != null)
                 {
                     beer.Description = description.ToObject<string>();
-                }                         
+                }
                 beerList.Add(beer);
             }
             return beerList;
         }
 
-        public double? GetUserBeersAverageAbv(User loggedInUser)
+        public async Task <double?> GetUserBeersAverageAbv(User loggedInUser)
         {
             var userBeers = _context.UserBeer.Where(b => b.UserId == loggedInUser.Id).ToList();
             Double? userBeerAbvSum = new double();
@@ -633,7 +642,7 @@ namespace BeerMatchBoxService.Controllers
         public async Task<List<DoughnutSection>> GenerateDoughnut(List<Match> beers)
         {
             var doughnutSections = new List<DoughnutSection>();
-            
+
             foreach (Match beer in beers)
             {
                 int numberOfSlices = doughnutSections.Count(i => i.StyleId == beer.StyleId);
@@ -651,7 +660,7 @@ namespace BeerMatchBoxService.Controllers
                         thisDougnutSection.Percentage += 20;
                         break;
                 }
-            } 
+            }
             while (doughnutSections.Count < 5)
             {
                 DoughnutSection newDoughnutSection = new DoughnutSection();
@@ -676,37 +685,6 @@ namespace BeerMatchBoxService.Controllers
             var brewereyName = thisBreweryResult["data"][0]["name"];
             beer.BreweryName = brewereyName.ToObject<string>();
 
-            //string findBeerBreweryLocationUrl = (APIKeys.BreweryDBAPIURL + "brewery/" + beer.BreweryDBBreweryId + "/locations/?key=" + APIKeys.BreweryDBAPIKey);
-            //HttpResponseMessage thisNewResponse = await client.GetAsync(findBeerBreweryLocationUrl);
-            //thisNewResponse.EnsureSuccessStatusCode();
-            //string thisNewBreweryResponseBody = await thisNewResponse.Content.ReadAsStringAsync();
-            //var thisNewBreweryResult = JsonConvert.DeserializeObject<JObject>(thisNewBreweryResponseBody);
-
-            //var breweryLat = thisNewBreweryResult["data"][0]["latitude"];
-            //if (breweryLat != null)
-            //{
-            //    beer.BeerBreweryLatitude = breweryLat.ToObject<decimal>();
-            //}
-            //var breweryLong = thisNewBreweryResult["data"][0]["longitude"];
-            //if (breweryLong != null)
-            //{
-            //    beer.BeerBreweryLongitude = breweryLong.ToObject<decimal>();
-            //}
-            //var breweryAddress = thisNewBreweryResult["data"][0]["streetAddress"];
-            //if (breweryAddress != null)
-            //{
-            //    beer.BeerBreweryAddress = breweryAddress.ToObject<string>();
-            //}
-            //var breweryCity = thisNewBreweryResult["data"][0]["locality"];
-            //if (breweryCity != null)
-            //{
-            //    beer.BeerBreweryCity = breweryCity.ToObject<string>();
-            //}
-            //var breweryState = thisNewBreweryResult["data"][0]["region"];
-            //if (breweryState != null)
-            //{
-            //    beer.BeerBreweryState = breweryState.ToObject<string>();
-            //}
             return beer;
         }
 
@@ -721,14 +699,10 @@ namespace BeerMatchBoxService.Controllers
 
             BreweryDBBrewery brewery = new BreweryDBBrewery();
 
-
             brewery.BreweryDBBreweryId = BreweryDBBreweryId;
 
             var name = data["data"][0]["name"];
             brewery.Name = name.ToObject<string>();
-
-
-
 
             var breweryLat = data["data"][0]["latitude"];
             if (breweryLat != null)
@@ -755,11 +729,18 @@ namespace BeerMatchBoxService.Controllers
             {
                 brewery.State = breweryState.ToObject<string>();
             }
-
-
             return View(brewery);
         }
 
+        public async Task<IActionResult> GetBoxOptions()
+        {
+            string IdentityId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User loggedInUser = _context.User.Where(u => u.IdentityUserId == IdentityId).SingleOrDefault();
+
+            var beers = await GetBeersWithCompatibleStyle(loggedInUser);
+
+            List<Match> preciseMatch = new List<Match>();
+            List<Match> somethingDifferent = new List<Match>();
 
 
 
@@ -768,14 +749,11 @@ namespace BeerMatchBoxService.Controllers
 
 
 
+            var viewModel = new GetBoxOptionsViewModel();
+            viewModel.PreciseMatch = preciseMatch;
+            viewModel.SomethingDifferent = somethingDifferent;
 
-
-
-
-
-
-
-
-
+            return View(viewModel);
+        }
     }
 }
