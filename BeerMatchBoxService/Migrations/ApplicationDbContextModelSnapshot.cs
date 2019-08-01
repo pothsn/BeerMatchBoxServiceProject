@@ -60,7 +60,11 @@ namespace BeerMatchBoxService.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Address");
+
                     b.Property<string>("BreweryDBBreweryId");
+
+                    b.Property<string>("City");
 
                     b.Property<string>("Description");
 
@@ -68,9 +72,15 @@ namespace BeerMatchBoxService.Migrations
 
                     b.Property<string>("IsOrganic");
 
+                    b.Property<decimal>("Latitude");
+
+                    b.Property<decimal>("Longitude");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("NameShortDisplay");
+
+                    b.Property<string>("State");
 
                     b.Property<string>("Website");
 
@@ -135,6 +145,48 @@ namespace BeerMatchBoxService.Migrations
                     b.ToTable("BreweryDBLabelHolder");
                 });
 
+            modelBuilder.Entity("BeerMatchBoxService.Models.Match", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double?>("Abv");
+
+                    b.Property<string>("BreweryDBBeerId");
+
+                    b.Property<string>("BreweryDBBreweryId");
+
+                    b.Property<string>("BreweryName");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("GlasswareId");
+
+                    b.Property<double?>("Ibu");
+
+                    b.Property<int?>("ImagesId");
+
+                    b.Property<string>("IsOrganic");
+
+                    b.Property<string>("IsRetired");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("StyleId");
+
+                    b.Property<string>("StyleName");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImagesId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Match");
+                });
+
             modelBuilder.Entity("BeerMatchBoxService.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -173,6 +225,8 @@ namespace BeerMatchBoxService.Migrations
                     b.Property<double?>("Abv");
 
                     b.Property<string>("BreweryDBBeerId");
+
+                    b.Property<string>("BreweryName");
 
                     b.Property<string>("Description");
 
@@ -454,6 +508,18 @@ namespace BeerMatchBoxService.Migrations
                     b.HasOne("BeerMatchBoxService.Models.BreweryDBBeer", "BreweryDBBeer")
                         .WithOne("Images")
                         .HasForeignKey("BeerMatchBoxService.Models.BreweryDBLabelHolder", "BreweryDBBeerId");
+                });
+
+            modelBuilder.Entity("BeerMatchBoxService.Models.Match", b =>
+                {
+                    b.HasOne("BeerMatchBoxService.Models.BreweryDBLabelHolder", "Images")
+                        .WithMany()
+                        .HasForeignKey("ImagesId");
+
+                    b.HasOne("BeerMatchBoxService.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BeerMatchBoxService.Models.User", b =>

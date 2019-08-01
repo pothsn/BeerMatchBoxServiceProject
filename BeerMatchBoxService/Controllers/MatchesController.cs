@@ -749,6 +749,10 @@ namespace BeerMatchBoxService.Controllers
             foreach (Match beer in filteredBeers)
             {
                 await GetBreweryInfo(beer);
+                //beer.UserId = loggedInUser.Id;
+                //_context.Add(beer);
+                //await _context.SaveChangesAsync();
+
             }
 
             var otherFilteredBeers = await FilterOtherBeers(beers, userBeersAverageAbv);
@@ -756,6 +760,9 @@ namespace BeerMatchBoxService.Controllers
             foreach (Match beer in otherFilteredBeers)
             {
                 await GetBreweryInfo(beer);
+                //beer.UserId = loggedInUser.Id;
+                //_context.Add(beer);
+                //await _context.SaveChangesAsync();
             }
 
             var viewModel = new GetBoxOptionsViewModel();

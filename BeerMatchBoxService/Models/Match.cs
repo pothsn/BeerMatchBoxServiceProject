@@ -14,6 +14,10 @@ namespace BeerMatchBoxService.Models
 
         public string BreweryDBBeerId { get; set; }
 
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public User User { get; set; }
+
         public string Name { get; set; }
 
         public string BreweryName { get; set; }
@@ -36,21 +40,8 @@ namespace BeerMatchBoxService.Models
 
         public BreweryDBLabelHolder Images { get; set; }
 
-        //[ForeignKey("BreweryDBBrewery")]
         public string BreweryDBBreweryId { get; set; }
         [NotMapped]
         public BreweryDBBeer BreweryDBBrewery { get; set; }
-
-        //public decimal? BeerBreweryLatitude { get; set; }
-
-        //public decimal? BeerBreweryLongitude { get; set; }
-
-        //public string BeerBreweryAddress { get; set; }
-
-        //public string BeerBreweryCity { get; set; }
-
-        //public string BeerBreweryState { get; set; }
-
-        //public int MatchRating { get; set; }
     }
 }

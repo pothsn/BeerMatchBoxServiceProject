@@ -93,6 +93,17 @@ namespace BeerMatchBoxService.Controllers
                 userBeer.Description = description.ToObject<string>();
             }
 
+            string findBeerBreweryURL = (APIKeys.BreweryDBAPIURL + "beer/" + breweryDBBeerId + "/breweries/?key=" + APIKeys.BreweryDBAPIKey);
+            HttpResponseMessage thisResponse = await client.GetAsync(findBeerBreweryURL);
+            thisResponse.EnsureSuccessStatusCode();
+            string thisBreweryResponseBody = await thisResponse.Content.ReadAsStringAsync();
+            var thisBreweryResult = JsonConvert.DeserializeObject<JObject>(thisBreweryResponseBody);
+
+            var brewereyName = thisBreweryResult["data"][0]["name"];
+
+            userBeer.BreweryName = brewereyName.ToObject<string>();
+
+
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User loggedInUser = _context.User.Where(u => u.IdentityUserId == userId).SingleOrDefault();
             userBeer.UserId = loggedInUser.Id;
@@ -100,6 +111,26 @@ namespace BeerMatchBoxService.Controllers
             _context.Add(userBeer);
             await _context.SaveChangesAsync();
             return RedirectToAction("Home", "Users");
+        }
+
+        public async Task<IActionResult> DeleteUserBeer(int userBeerId)
+        {
+            var userBeer = _context.UserBeer.Where(b => b.Id == userBeerId).FirstOrDefault();
+            _context.UserBeer.Remove(userBeer);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("EditUserBeers");
+        }
+
+        public async Task<IActionResult> EditUserBeers()
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User loggedInUser = _context.User.Where(u => u.IdentityUserId == userId).SingleOrDefault();
+
+            var userBeers = _context.UserBeer.Where(b => b.UserId == loggedInUser.Id).ToList();
+
+
+
+            return View(userBeers);
         }
 
         // GET: UserBeers/Create

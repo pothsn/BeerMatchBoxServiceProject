@@ -19,7 +19,7 @@ namespace BeerMatchBoxService.Models
 
         public string Name { get; set; }
 
-        //public string BreweryName { get; set; }
+        public string BreweryName { get; set; }
 
         public double? Abv { get; set; }
 

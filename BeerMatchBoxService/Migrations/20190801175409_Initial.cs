@@ -87,7 +87,12 @@ namespace BeerMatchBoxService.Migrations
                     Description = table.Column<string>(nullable: true),
                     Website = table.Column<string>(nullable: true),
                     Established = table.Column<int>(nullable: false),
-                    IsOrganic = table.Column<string>(nullable: true)
+                    IsOrganic = table.Column<string>(nullable: true),
+                    Latitude = table.Column<decimal>(nullable: false),
+                    Longitude = table.Column<decimal>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -283,6 +288,7 @@ namespace BeerMatchBoxService.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BreweryDBBeerId = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
+                    BreweryName = table.Column<string>(nullable: true),
                     Abv = table.Column<double>(nullable: true),
                     Ibu = table.Column<double>(nullable: true),
                     GlasswareId = table.Column<int>(nullable: true),
@@ -351,6 +357,43 @@ namespace BeerMatchBoxService.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Match",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    BreweryDBBeerId = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    BreweryName = table.Column<string>(nullable: true),
+                    Abv = table.Column<double>(nullable: true),
+                    Ibu = table.Column<double>(nullable: true),
+                    GlasswareId = table.Column<int>(nullable: true),
+                    StyleId = table.Column<string>(nullable: true),
+                    StyleName = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    IsOrganic = table.Column<string>(nullable: true),
+                    IsRetired = table.Column<string>(nullable: true),
+                    ImagesId = table.Column<int>(nullable: true),
+                    BreweryDBBreweryId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Match", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Match_BreweryDBLabelHolder_ImagesId",
+                        column: x => x.ImagesId,
+                        principalTable: "BreweryDBLabelHolder",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Match_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -410,6 +453,16 @@ namespace BeerMatchBoxService.Migrations
                 filter: "[BreweryDBBeerId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Match_ImagesId",
+                table: "Match",
+                column: "ImagesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Match_UserId",
+                table: "Match",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_User_IdentityUserId",
                 table: "User",
                 column: "IdentityUserId");
@@ -446,7 +499,7 @@ namespace BeerMatchBoxService.Migrations
                 name: "BreweryDBIconHolder");
 
             migrationBuilder.DropTable(
-                name: "BreweryDBLabelHolder");
+                name: "Match");
 
             migrationBuilder.DropTable(
                 name: "UserBeer");
@@ -461,10 +514,13 @@ namespace BeerMatchBoxService.Migrations
                 name: "BreweryDBBrewery");
 
             migrationBuilder.DropTable(
-                name: "BreweryDBBeer");
+                name: "BreweryDBLabelHolder");
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "BreweryDBBeer");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

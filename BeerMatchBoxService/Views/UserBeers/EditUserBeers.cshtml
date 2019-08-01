@@ -1,0 +1,48 @@
+﻿@model IEnumerable<BeerMatchBoxService.Models.UserBeer>
+@{
+    ViewData["Title"] = "EditUserBeers";
+}
+
+<h2>Your Beers</h2>
+
+<table class="table">
+<thead>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Style Name
+        </th>
+        <th>
+            ABV
+        </th>
+        <th>
+            Brewery Name
+        </th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StyleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Abv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BreweryName)
+            </td>
+            <td>
+                <a asp-controller="UserBeers" asp-action="DeleteUserBeer" asp-route-userbeerid="@item.Id">Remove Beer</a>
+            </td>
+        </tr>
+     }
+</tbody>
+</table>
