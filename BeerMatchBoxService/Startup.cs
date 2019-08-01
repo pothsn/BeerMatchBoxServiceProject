@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using BeerMatchBoxService.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stripe;
+using BeerMatchBoxService.Models;
 
 namespace BeerMatchBoxService
 {
@@ -41,13 +43,17 @@ namespace BeerMatchBoxService
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
             
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -71,6 +77,10 @@ namespace BeerMatchBoxService
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            
+            
+
         }
     }
 }

@@ -734,6 +734,9 @@ namespace BeerMatchBoxService.Controllers
 
         public async Task<IActionResult> GetBoxOptions()
         {
+            //ViewBag.StripePublishableAPIKey = APIKeys.StripePublishableAPIKey;
+            //ViewBag.StripeSecretAPIKey = APIKeys.StripeSecretAPIKey;
+
             string IdentityId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User loggedInUser = _context.User.Where(u => u.IdentityUserId == IdentityId).SingleOrDefault();
 

@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+}
+<br />
+<div>
+    <form action="/Payment/Processing" method="POST">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="@ViewBag.StripePublishableAPIKey"
+                data-amount="@ViewBag.PaymentAmount"
+                data-name="Beer Match Box Service"
+                data-description="One beer box for $49"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="en"
+                data-zip-code="true"
+                data-label="Pay 49$">
+        </script>
+    </form>
+</div>
