@@ -119,7 +119,7 @@ namespace BeerMatchBoxService.Controllers
                 }
             }
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", userTaste.UserId);
-            return RedirectToAction("Home", "Users");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: UserTastes/Delete/5
