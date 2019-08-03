@@ -4,10 +4,32 @@
     ViewData["Title"] = "Create";
 }
 
+<style>
+    .background-image {
+        position: absolute;
+        left: 0;
+        top: 115px;
+        height: 230%;
+        width: 100%;
+        background-image: url(/images/TastesInfoGraphicV2.png);
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+</style>
+
 <h2>Taste profile</h2>
 <br />
-<p>QUIZ BELOW! Answer accordingly: 1 = Strongly disagree, 2 = disagree, 3 = don't know/no preference, 4 = agree and 5 = strongly agree.</p>
-<hr/>
+<p>Key: 1 = Strongly disagree, 5 = don't know/no preference, 10 = strongly agree.</p>
+
+
+<div class="background-image">
+
+</div>
+<br />
+<br />
+<br />
+<br />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -463,11 +485,10 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
+            <div>
+                <a asp-controller="Home" asp-action="Index">Home</a>
+            </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
