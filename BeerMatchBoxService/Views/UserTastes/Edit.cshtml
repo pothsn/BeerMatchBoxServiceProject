@@ -4,10 +4,31 @@
     ViewData["Title"] = "Edit";
 }
 
+<style>
+    .background-image {
+        position: absolute;
+        left: 0;
+        top: 130px;
+        height: 230%;
+        width: 100%;
+        background-image: url(/images/TastesInfoGraphicV2.png);
+        background-repeat: no-repeat;
+        background-position: center;       
+    }
+</style>
+
+
+<div class="background-image">
+
+</div>
+
 <h2>Edit</h2>
 
 <h4>UserTaste</h4>
-<hr />
+<br/>
+<br />
+<br />
+<br />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -465,11 +486,9 @@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
+            <div>
+                <a asp-controller="Home" asp-action="Index">Home</a>
+            </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-controller="Home" asp-action="Index">Home</a>
-</div>
-
