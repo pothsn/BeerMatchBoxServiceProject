@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeerMatchBoxService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190801175409_Initial")]
+    [Migration("20190803171631_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
