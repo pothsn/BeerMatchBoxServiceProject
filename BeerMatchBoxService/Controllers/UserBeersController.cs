@@ -110,7 +110,7 @@ namespace BeerMatchBoxService.Controllers
 
             _context.Add(userBeer);
             await _context.SaveChangesAsync();
-            return RedirectToAction("GetBeers", "BreweryDBBeers");
+            return RedirectToAction("EditUserBeers");
         }
 
         public async Task<IActionResult> DeleteUserBeer(int userBeerId)
