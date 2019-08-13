@@ -40,12 +40,10 @@ namespace BeerMatchBoxService.Controllers
 
             var doughnutSections = await GenerateDoughnut(filteredBeers);
 
-
             var viewModel = new GetMatchesViewModel();
             viewModel.Matches = filteredBeers;
             viewModel.UserTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
             viewModel.DoughnutSections = doughnutSections;
-
 
             return View(viewModel);
         }
