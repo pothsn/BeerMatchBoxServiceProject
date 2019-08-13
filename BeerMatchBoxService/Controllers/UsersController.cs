@@ -105,8 +105,6 @@ namespace BeerMatchBoxService.Controllers
             }
         }
 
-
-
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

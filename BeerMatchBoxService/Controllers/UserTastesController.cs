@@ -20,32 +20,6 @@ namespace BeerMatchBoxService.Controllers
             _context = context;
         }
 
-        // GET: UserTastes
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.UserTaste.Include(u => u.User);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
-        // GET: UserTastes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userTaste = await _context.UserTaste
-                .Include(u => u.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (userTaste == null)
-            {
-                return NotFound();
-            }
-
-            return View(userTaste);
-        }
-
         // GET: UserTastes/Create
         public IActionResult Create()
         {
@@ -120,37 +94,7 @@ namespace BeerMatchBoxService.Controllers
             }
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", userTaste.UserId);
             return RedirectToAction("Index", "Home");
-        }
-
-        // GET: UserTastes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userTaste = await _context.UserTaste
-                .Include(u => u.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (userTaste == null)
-            {
-                return NotFound();
-            }
-
-            return View(userTaste);
-        }
-
-        // POST: UserTastes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var userTaste = await _context.UserTaste.FindAsync(id);
-            _context.UserTaste.Remove(userTaste);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        }     
 
         private bool UserTasteExists(int id)
         {
