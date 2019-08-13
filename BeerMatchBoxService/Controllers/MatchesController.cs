@@ -247,9 +247,6 @@ namespace BeerMatchBoxService.Controllers
             return (beers);
         }
 
-
-
-
         public bool CheckPilsener(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
@@ -769,7 +766,6 @@ namespace BeerMatchBoxService.Controllers
 
             List<string> preciseMatchBeerNames = new List<string>();
             List<string> somethingDifferentBeerNames = new List<string>();
-
 
             foreach (Match beer in filteredBeers)
             {

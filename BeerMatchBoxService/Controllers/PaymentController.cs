@@ -69,7 +69,6 @@ namespace BeerMatchBoxService.Controllers
             ViewBag.PaymentAmount = amount;
             ViewBag.StripePublishableAPIKey = APIKeys.StripePublishableAPIKey;
 
-
             return View("index", viewModel);
         }
     }

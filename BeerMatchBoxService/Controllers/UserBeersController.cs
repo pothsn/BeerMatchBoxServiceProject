@@ -24,33 +24,6 @@ namespace BeerMatchBoxService.Controllers
             _context = context;
         }
 
-        // GET: UserBeers
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.UserBeer.Include(u => u.BreweryDBBeer).Include(u => u.User);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
-        // GET: UserBeers/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userBeer = await _context.UserBeer
-                .Include(u => u.BreweryDBBeer)
-                .Include(u => u.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (userBeer == null)
-            {
-                return NotFound();
-            }
-
-            return View(userBeer);
-        }
-
         //Add UserBeer from one of the index views
         public async Task<IActionResult> AddUserBeer(string breweryDBBeerId)
         {
@@ -103,7 +76,6 @@ namespace BeerMatchBoxService.Controllers
 
             userBeer.BreweryName = brewereyName.ToObject<string>();
 
-
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User loggedInUser = _context.User.Where(u => u.IdentityUserId == userId).SingleOrDefault();
             userBeer.UserId = loggedInUser.Id;
@@ -128,126 +100,7 @@ namespace BeerMatchBoxService.Controllers
 
             var userBeers = _context.UserBeer.Where(b => b.UserId == loggedInUser.Id).ToList();
 
-
-
             return View(userBeers);
-        }
-
-        // GET: UserBeers/Create
-        public IActionResult Create()
-        {
-            ViewData["BreweryDBBeerId"] = new SelectList(_context.BreweryDBBeer, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
-            return View();
-        }
-
-        // POST: UserBeers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,StyleName,StyleId,Abv,Ibu,UserId,BreweryDBBeerId")] UserBeer userBeer)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(userBeer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["BreweryDBBeerId"] = new SelectList(_context.BreweryDBBeer, "Id", "Id", userBeer.BreweryDBBeerId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", userBeer.UserId);
-            return View(userBeer);
-        }
-
-        // GET: UserBeers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userBeer = await _context.UserBeer.FindAsync(id);
-            if (userBeer == null)
-            {
-                return NotFound();
-            }
-            ViewData["BreweryDBBeerId"] = new SelectList(_context.BreweryDBBeer, "Id", "Id", userBeer.BreweryDBBeerId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", userBeer.UserId);
-            return View(userBeer);
-        }
-
-        // POST: UserBeers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StyleName,StyleId,Abv,Ibu,UserId,BreweryDBBeerId")] UserBeer userBeer)
-        {
-            if (id != userBeer.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(userBeer);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserBeerExists(userBeer.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["BreweryDBBeerId"] = new SelectList(_context.BreweryDBBeer, "Id", "Id", userBeer.BreweryDBBeerId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", userBeer.UserId);
-            return View(userBeer);
-        }
-
-        // GET: UserBeers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userBeer = await _context.UserBeer
-                .Include(u => u.BreweryDBBeer)
-                .Include(u => u.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (userBeer == null)
-            {
-                return NotFound();
-            }
-
-            return View(userBeer);
-        }
-
-        // POST: UserBeers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var userBeer = await _context.UserBeer.FindAsync(id);
-            _context.UserBeer.Remove(userBeer);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool UserBeerExists(int id)
-        {
-            return _context.UserBeer.Any(e => e.Id == id);
         }
     }
 }
