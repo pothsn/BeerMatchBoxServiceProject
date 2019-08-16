@@ -263,7 +263,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckIPA(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesPale > 6 && userTaste.LikesHoppy > 6 && userTaste.LikesBitter > 6 && userTaste.LikesIPA > 6)
+            if (userTaste.LikesPale > 5 && userTaste.LikesHoppy > 7 && userTaste.LikesBitter > 7 && userTaste.LikesIPA > 6)
             {
                 return true;
             }
@@ -276,7 +276,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckSessionIPA(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesSession > 6 && userTaste.LikesHoppy > 6 && userTaste.LikesBitter > 6 && userTaste.LikesIPA > 6)
+            if (userTaste.LikesSession > 6 && userTaste.LikesHoppy > 7 && userTaste.LikesBitter > 7 && userTaste.LikesIPA > 6)
             {
                 return true;
             }
@@ -289,7 +289,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckPaleAle(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesPale > 6 && userTaste.LikesHoppy > 6 && userTaste.LikesBitter > 6 && userTaste.LikesPale > 6)
+            if (userTaste.LikesPale > 5 && userTaste.LikesHoppy > 6 && userTaste.LikesBitter > 6 && userTaste.LikesPaleAle > 6)
             {
                 return true;
             }
@@ -302,7 +302,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckESB(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesBitter > 6 && userTaste.LikesMalty > 6 && userTaste.LikesMiddling > 6 && userTaste.LikesAle > 6)
+            if (userTaste.LikesBitter > 5 && userTaste.LikesMalty > 7 && userTaste.LikesMiddling > 7 && userTaste.LikesAle > 6)
             {
                 return true;
             }
@@ -315,7 +315,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckWheatWineAle(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesFruity > 6 && userTaste.LikesWheat > 6 && userTaste.LikesStrong > 6 && userTaste.LikesAle > 6)
+            if (userTaste.LikesFruity > 7 && userTaste.LikesWheat > 7 && userTaste.LikesStrong > 6 && userTaste.LikesAle > 5)
             {
                 return true;
             }
@@ -328,7 +328,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckStout(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesDark > 6 && userTaste.LikesMalty > 6 && userTaste.LikesStout > 6 && userTaste.LikesCoffee > 6)
+            if (userTaste.LikesDark > 7 && userTaste.LikesMalty > 6 && userTaste.LikesStout > 7 && userTaste.LikesCoffee > 6)
             {
                 return true;
             }
@@ -341,7 +341,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckSaison(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesPale > 6 && userTaste.LikesBelgian > 6 && userTaste.LikesSaison > 6 && userTaste.LikesAle > 6)
+            if (userTaste.LikesPale > 5 && userTaste.LikesBelgian > 6 && userTaste.LikesSaison > 7 && userTaste.LikesAle > 7)
             {
                 return true;
             }
@@ -354,7 +354,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckTripel(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesPale > 6 && userTaste.LikesStrong > 6 && userTaste.LikesBelgian > 6 && userTaste.LikesAle > 6)
+            if (userTaste.LikesPale > 5 && userTaste.LikesStrong > 7 && userTaste.LikesBelgian > 6 && userTaste.LikesAle > 5)
             {
                 return true;
             }
@@ -367,7 +367,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckBarrelAged(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesMiddling > 6 && userTaste.LikesDark > 6 && userTaste.LikesStrong > 6 && userTaste.LikesBarrelAged > 6)
+            if (userTaste.LikesMiddling > 4 && userTaste.LikesDark > 4 && userTaste.LikesStrong > 6 && userTaste.LikesBarrelAged > 6)
             {
                 return true;
             }
@@ -380,7 +380,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckLager(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesPale > 6 && userTaste.LikesLager > 6 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3)
+            if (userTaste.LikesPale > 5 && userTaste.LikesLager > 5 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3)
             {
                 return true;
             }
@@ -393,7 +393,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckDipa(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesStrong > 6 && userTaste.LikesIPA > 6 && userTaste.LikesHoppy > 6 && userTaste.LikesBitter > 6)
+            if (userTaste.LikesStrong > 7 && userTaste.LikesIPA > 7 && userTaste.LikesHoppy > 8 && userTaste.LikesBitter > 8)
             {
                 return true;
             }
@@ -406,7 +406,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckFlanders(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesSour > 6 && userTaste.LikesSourBeer > 6 && userTaste.LikesMiddling > 6 && userTaste.LikesBelgian > 6)
+            if (userTaste.LikesSour > 7 && userTaste.LikesSourBeer > 6 && userTaste.LikesMiddling > 5 && userTaste.LikesBelgian > 5)
             {
                 return true;
             }
@@ -419,7 +419,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckImperialPorter(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesStrong > 6 && userTaste.LikesPorter > 6 && userTaste.LikesDark > 6 && userTaste.LikesChocolate > 6 && userTaste.LikesMalty > 6)
+            if (userTaste.LikesStrong > 7 && userTaste.LikesPorter > 7 && userTaste.LikesDark > 6 && userTaste.LikesChocolate > 6 && userTaste.LikesMalty > 5)
             {
                 return true;
             }
@@ -432,7 +432,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckHeller(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesGerman > 6 && userTaste.LikesPale > 6 && userTaste.LikesStrong > 6 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3 && userTaste.LikesMalty > 5)
+            if (userTaste.LikesGerman > 5 && userTaste.LikesPale > 5 && userTaste.LikesStrong > 6 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3 && userTaste.LikesMalty > 5)
             {
                 return true;
             }
@@ -445,7 +445,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckImperialStout(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesStrong > 6 && userTaste.LikesDark > 6 && userTaste.LikesMalty > 6 && userTaste.LikesChocolate > 6 && userTaste.LikesStout > 6 && userTaste.LikesCoffee > 6)
+            if (userTaste.LikesStrong > 7 && userTaste.LikesDark > 7 && userTaste.LikesMalty > 5 && userTaste.LikesChocolate > 6 && userTaste.LikesStout > 7 && userTaste.LikesCoffee > 5)
             {
                 return true;
             }
@@ -458,7 +458,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckBarleyWine(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesStrong > 6 && userTaste.LikesMiddling > 6 && userTaste.LikesSweet > 6 && userTaste.LikesFruity > 6)
+            if (userTaste.LikesStrong > 6 && userTaste.LikesMiddling > 5 && userTaste.LikesSweet > 5 && userTaste.LikesFruity > 6)
             {
                 return true;
             }
@@ -471,7 +471,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckStrongAle(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesStrong > 6 && userTaste.LikesMiddling > 6 && userTaste.LikesMalty > 6 && userTaste.LikesAle > 6)
+            if (userTaste.LikesStrong > 6 && userTaste.LikesMiddling > 5 && userTaste.LikesMalty > 5 && userTaste.LikesAle > 7)
             {
                 return true;
             }
@@ -484,7 +484,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckSpecialtyStout(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesStrong > 6 && userTaste.LikesDark > 6 && userTaste.LikesMalty > 6 && userTaste.LikesChocolate > 6 && userTaste.LikesStout > 6 && userTaste.LikesCoffee > 6)
+            if (userTaste.LikesStrong > 7 && userTaste.LikesDark > 7 && userTaste.LikesMalty > 5 && userTaste.LikesChocolate > 7 && userTaste.LikesStout > 6 && userTaste.LikesCoffee > 6)
             {
                 return true;
             }
@@ -497,7 +497,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckSpecialBitter(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesMiddling > 6 && userTaste.LikesMalty > 5 && userTaste.LikesHoppy > 5 && userTaste.LikesBitter > 6 && userTaste.LikesSweet > 5)
+            if (userTaste.LikesMiddling > 5 && userTaste.LikesMalty > 7 && userTaste.LikesHoppy > 5 && userTaste.LikesBitter > 7 && userTaste.LikesSweet > 5)
             {
                 return true;
             }
@@ -510,7 +510,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckBelgianPale(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesPale > 6 && userTaste.LikesPaleAle > 5 && userTaste.LikesBelgian > 5 && userTaste.LikesAle > 6)
+            if (userTaste.LikesPale > 5 && userTaste.LikesPaleAle > 5 && userTaste.LikesBelgian > 5 && userTaste.LikesAle > 5 && userTaste.LikesSweet > 6)
             {
                 return true;
             }
@@ -523,7 +523,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckLightAmericanWheatAleOrLagerWithYeast(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesPale > 6 && userTaste.LikesWheat > 5 && userTaste.LikesLager > 5 && userTaste.LikesAle > 6 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3 && userTaste.LikesFruity > 3)
+            if (userTaste.LikesPale > 4 && userTaste.LikesWheat > 6 && userTaste.LikesLager > 5 && userTaste.LikesAle > 5 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3 && userTaste.LikesFruity > 5)
             {
                 return true;
             }
@@ -536,7 +536,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckImperialRedAle(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesStrong > 6 && userTaste.LikesMiddling > 5 && userTaste.LikesRedAle > 5 && userTaste.LikesMalty > 6 && userTaste.LikesHoppy > 6 && userTaste.LikesAle > 6)
+            if (userTaste.LikesStrong > 6 && userTaste.LikesMiddling > 5 && userTaste.LikesRedAle > 6 && userTaste.LikesMalty > 7 && userTaste.LikesHoppy > 7 && userTaste.LikesAle > 6)
             {
                 return true;
             }
@@ -549,7 +549,7 @@ namespace BeerMatchBoxService.Controllers
         public bool CheckFruitWheatAleOrLagerWithoutYeast(User loggedInUser)
         {
             var userTaste = _context.UserTaste.Where(u => u.UserId == loggedInUser.Id).FirstOrDefault();
-            if (userTaste.LikesFruity > 7 && userTaste.LikesWheat > 6 && userTaste.LikesLager > 5 && userTaste.LikesLager > 5 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3)
+            if (userTaste.LikesFruity > 7 && userTaste.LikesWheat > 6 && userTaste.LikesLager > 5 && userTaste.LikesHoppy > 3 && userTaste.LikesBitter > 3)
             {
                 return true;
             }
